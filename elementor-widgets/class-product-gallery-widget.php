@@ -9,7 +9,7 @@ class TungTheme_Product_Gallery_Widget extends Widget_Base {
         return 'tungtheme_product_gallery';
     }
     public function get_title() {
-        return 'Product Gallery';
+        return 'Dummy Products Gallery';
     }
     public function get_icon() {
         return 'eicon-products';

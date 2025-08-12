@@ -69,7 +69,7 @@ add_action('elementor/widgets/register', function($widgets_manager) {
  */
 add_action('elementor/elements/categories_registered', function($elements_manager) {
     $elements_manager->add_category('theme-widgets', [
-        'title' => __('Theme Widgets', 'tungtheme'),
+        'title' => __('All of Tung\' Widgets', 'tungtheme'),
         'icon' => 'fa fa-plug'
     ]);
 });
