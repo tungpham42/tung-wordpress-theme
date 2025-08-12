@@ -1,0 +1,70 @@
+/*
+Theme Name: Tung Elementor Theme
+Theme URI: https://github.com/tungpham42/tung-wordpress-theme
+Author: Tung Pham
+Author URI: https://tungpham42.github.io
+Description: Tung's theme with Elementor and WooCommerce single product page
+Version: 1.0
+License: GNU General Public License v2 or later
+Text Domain: tung-wordpress-theme
+*/
+
+:root {
+  --container-max: 1200px;
+  --accent: #0d6efd;
+  --muted: #6c757d;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial;
+  margin: 0;
+  color: #222;
+}
+.site-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 24px;
+}
+header.site-header {
+  border-bottom: 1px solid #eee;
+  padding: 18px 0;
+}
+.site-branding {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.site-title {
+  font-weight: 700;
+}
+.site-nav {
+  margin-left: auto;
+}
+.product-single {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.product-images {
+  max-width: 100%;
+}
+.product-summary {
+  padding: 12px;
+}
+.woocommerce div.product .price {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .product-single {
+    grid-template-columns: 1fr;
+  }
+}
