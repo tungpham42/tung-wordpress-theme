@@ -71,3 +71,14 @@ function tungtheme_enqueue_assets() {
     ]);
 }
 add_action('wp_enqueue_scripts', 'tungtheme_enqueue_assets');
+
+// Register custom rewrite for product/{id}
+add_action('init', function() {
+    add_rewrite_rule('^product/([0-9]+)/?', 'index.php?pagename=single-product&product_id=$matches[1]', 'top');
+});
+
+// Allow product_id in query vars
+add_filter('query_vars', function($vars) {
+    $vars[] = 'product_id';
+    return $vars;
+});

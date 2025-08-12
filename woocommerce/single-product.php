@@ -1,71 +1,79 @@
 <?php
 /**
- * Template Name: Single Product
- * Template Post Type: product
+ * Template Name: Single Product (DummyJSON)
  */
-
 get_header();
-
-// Get product ID from URL query string (?id=xx) or from WordPress post slug
-$product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-
-if ( $product_id > 0 ) :
-    $api_url = "https://dummyjson.com/products/" . $product_id;
-    $response = wp_remote_get( $api_url );
-
-    if ( is_array($response) && !is_wp_error($response) ) :
-        $product = json_decode( wp_remote_retrieve_body($response), true );
-        if ( isset($product['id']) ) :
 ?>
-<div class="single-product-container">
-    <div class="product-gallery">
-        <img src="<?php echo esc_url($product['thumbnail']); ?>" alt="<?php echo esc_attr($product['title']); ?>" />
-        <div class="product-thumbnails">
-            <?php foreach ( $product['images'] as $img ) : ?>
-                <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($product['title']); ?>" />
-            <?php endforeach; ?>
-        </div>
-    </div>
-    <div class="product-details">
-        <h1><?php echo esc_html($product['title']); ?></h1>
-        <p class="price">$<?php echo esc_html($product['price']); ?></p>
-        <p class="category"><strong>Category:</strong> <?php echo esc_html($product['category']); ?></p>
-        <p class="description"><?php echo esc_html($product['description']); ?></p>
-    </div>
-</div>
 
-<hr>
-
-<div class="related-products">
-    <h2>Related Products</h2>
-    <div class="related-grid" id="related-products-container"></div>
+<div id="single-product" class="container" style="padding:20px;">
+    <div class="pg-loading" style="display:none;">Loading product...</div>
+    <div class="product-details"></div>
+    <div class="related-products"></div>
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    fetch(`https://dummyjson.com/products/category/<?php echo esc_js($product['category']); ?>?limit=4`)
+    const productContainer = document.querySelector(".product-details");
+    const relatedContainer = document.querySelector(".related-products");
+    const loader = document.querySelector(".pg-loading");
+
+    // Get product ID from URL
+    const pathParts = window.location.pathname.split('/');
+    const productId = pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2];
+
+    if (!productId) {
+        productContainer.innerHTML = "<p>Invalid product ID.</p>";
+        return;
+    }
+
+    loader.style.display = "block";
+
+    // Fetch product details
+    fetch(`https://dummyjson.com/products/${productId}`)
         .then(res => res.json())
-        .then(data => {
-            const container = document.getElementById('related-products-container');
-            data.products.forEach(prod => {
-                container.innerHTML += `
-                    <div class="related-item">
-                        <a href="<?php echo site_url('/single-product'); ?>?id=${prod.id}">
-                            <img src="${prod.thumbnail}" alt="${prod.title}" />
-                            <p>${prod.title}</p>
-                        </a>
+        .then(product => {
+            loader.style.display = "none";
+            productContainer.innerHTML = `
+                <div style="display:flex;gap:20px;flex-wrap:wrap;">
+                    <div style="flex:1;min-width:300px;">
+                        <img src="${product.thumbnail}" alt="${product.title}" style="max-width:100%;border-radius:8px;">
+                        <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+                            ${product.images.map(img => `<img src="${img}" style="width:80px;height:80px;object-fit:cover;border-radius:4px;">`).join('')}
+                        </div>
                     </div>
-                `;
-            });
+                    <div style="flex:1;min-width:300px;">
+                        <h1>${product.title}</h1>
+                        <p><strong>Category:</strong> ${product.category}</p>
+                        <p><strong>Price:</strong> $${product.price}</p>
+                        <p>${product.description}</p>
+                    </div>
+                </div>
+            `;
+
+            // Fetch related products
+            fetch(`https://dummyjson.com/products/category/${encodeURIComponent(product.category)}`)
+                .then(res => res.json())
+                .then(data => {
+                    relatedContainer.innerHTML = `
+                        <h2 style="margin-top:40px;">Related Products</h2>
+                        <div style="display:flex;gap:20px;flex-wrap:wrap;">
+                            ${data.products.filter(p => p.id !== product.id).map(p => `
+                                <div style="flex:1;min-width:200px;max-width:200px;border:1px solid #ddd;border-radius:8px;padding:10px;text-align:center;">
+                                    <img src="${p.thumbnail}" style="width:100%;border-radius:4px;">
+                                    <h4>${p.title}</h4>
+                                    <p>$${p.price}</p>
+                                    <a href="/product/${p.id}" class="btn-view">View</a>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                });
+        })
+        .catch(() => {
+            loader.style.display = "none";
+            productContainer.innerHTML = "<p>Error loading product.</p>";
         });
 });
 </script>
 
-<?php
-        endif;
-    endif;
-else :
-    echo '<p>Product not found.</p>';
-endif;
-
-get_footer();
+<?php get_footer(); ?>
