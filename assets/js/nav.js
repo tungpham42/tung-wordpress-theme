@@ -1,5 +1,3 @@
-jQuery(document).ready(function ($) {
-  $(".hamburger").click(function () {
-    $(".primary-nav-menu").toggleClass("active");
-  });
+document.querySelector(".hamburger").addEventListener("click", () => {
+  document.querySelector(".primary-nav-menu").classList.toggle("active");
 });
