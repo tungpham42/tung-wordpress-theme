@@ -1,0 +1,32 @@
+.tungtheme-product-gallery {
+  padding: 20px;
+}
+.pg-filter {
+  margin-bottom: 15px;
+}
+.pg-grid {
+  display: grid;
+  gap: 15px;
+}
+.pg-item {
+  border: 1px solid #eee;
+  padding: 10px;
+  text-align: center;
+}
+.pg-item img {
+  max-width: 100%;
+  height: auto;
+}
+.price {
+  font-weight: bold;
+  color: #27ae60;
+}
+.pg-loading {
+  text-align: center;
+  display: none;
+}
+@media (min-width: 768px) {
+  .pg-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}

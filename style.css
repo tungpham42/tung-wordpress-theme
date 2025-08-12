@@ -9,62 +9,117 @@ License: GNU General Public License v2 or later
 Text Domain: tung-wordpress-theme
 */
 
-:root {
-  --container-max: 1200px;
-  --accent: #0d6efd;
-  --muted: #6c757d;
-}
-
-html,
 body {
-  height: 100%;
-}
-body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial;
+  font-family: Arial, sans-serif;
   margin: 0;
-  color: #222;
-}
-.site-container {
-  max-width: var(--container-max);
-  margin: 0 auto;
-  padding: 24px;
-}
-header.site-header {
-  border-bottom: 1px solid #eee;
-  padding: 18px 0;
-}
-.site-branding {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.site-title {
-  font-weight: 700;
-}
-.site-nav {
-  margin-left: auto;
-}
-.product-single {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
-  align-items: start;
-}
-.product-images {
-  max-width: 100%;
-}
-.product-summary {
-  padding: 12px;
-}
-.woocommerce div.product .price {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--accent);
+  padding: 0;
+  font-size: 16px;
 }
 
-@media (max-width: 900px) {
-  .product-single {
-    grid-template-columns: 1fr;
+header,
+footer {
+  padding: 12px;
+  background: #333;
+  color: #fff;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: block;
+  margin: 8px 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.product-summary {
+  padding: 10px;
+}
+
+.single-product .product {
+  display: block;
+}
+
+/* Tablets (≥768px) */
+@media (min-width: 768px) {
+  nav ul {
+    display: flex;
+    gap: 16px;
+    margin: 0;
+  }
+
+  nav ul li {
+    margin: 0;
+  }
+
+  .product-summary {
+    display: flex;
+    gap: 20px;
+  }
+
+  .single-product .product {
+    display: flex;
+    gap: 20px;
+  }
+
+  .single-product .product .images,
+  .single-product .product .summary {
+    flex: 1;
+  }
+}
+
+/* Desktops (≥1024px) */
+@media (min-width: 1024px) {
+  header,
+  footer {
+    padding: 20px 40px;
+  }
+}
+
+.single-product-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.product-gallery {
+  flex: 1 1 300px;
+}
+.product-thumbnails img {
+  width: 60px;
+  margin: 5px;
+  cursor: pointer;
+}
+.product-details {
+  flex: 1 1 300px;
+}
+.related-products {
+  margin-top: 40px;
+}
+.related-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.related-item {
+  flex: 1 1 calc(25% - 20px);
+}
+.related-item img {
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 768px) {
+  .related-item {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+@media (max-width: 480px) {
+  .related-item {
+    flex: 1 1 100%;
   }
 }
