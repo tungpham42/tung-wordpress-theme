@@ -37,6 +37,10 @@ header {
   z-index: 1000;
 }
 
+a.site-logo {
+  text-decoration: none !important;
+}
+
 .nav-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -111,6 +115,18 @@ footer {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
   margin-bottom: 2rem;
+}
+
+.footer-widgets article {
+  background: unset !important;
+  padding: 0 !important;
+}
+
+.footer-widgets header,
+.footer-widgets footer,
+.footer-widgets ol,
+.footer-widgets ul {
+  padding: 0 !important;
 }
 
 .footer-bottom {
@@ -380,4 +396,8 @@ img:hover {
 .elementor-container {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+ol.wp-block-latest-comments {
+  padding-left: 0 !important;
 }
