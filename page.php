@@ -1,11 +1,11 @@
 <?php get_header(); ?>
 <main>
     <?php
-    if (did_action('elementor/loaded') && \Elementor\Plugin::$instance->preview->is_preview_mode()) {
-        echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display(get_the_ID());
-    } else {
-        while (have_posts()) :
-            the_post();
+    while (have_posts()) :
+        the_post();
+        if (did_action('elementor/loaded') && (\Elementor\Plugin::$instance->preview->is_preview_mode() || \Elementor\Plugin::$instance->documents->get(get_the_ID())->is_built_with_elementor())) {
+            echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display(get_the_ID());
+        } else {
             ?>
             <article id="page-<?php the_ID(); ?>" <?php post_class(); ?>>
                 <header class="entry-header">
@@ -16,8 +16,8 @@
                 </div>
             </article>
             <?php
-        endwhile;
-    }
+        }
+    endwhile;
     ?>
 </main>
 <?php get_footer(); ?>
