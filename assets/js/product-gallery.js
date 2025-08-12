@@ -5,9 +5,21 @@ jQuery(document).ready(function ($) {
       if (Array.isArray(categories) && categories.length > 0) {
         let options = `<option value="">All Categories</option>`;
         categories.forEach((cat) => {
-          options += `<option value="${cat}">${cat}</option>`;
+          // Handle both string and object cases
+          const categoryValue =
+            typeof cat === "string"
+              ? cat
+              : cat.name || cat.slug || JSON.stringify(cat);
+          const categoryDisplay = categoryValue
+            .replace(/-/g, " ")
+            .replace(/\b\w/g, (char) => char.toUpperCase()); // Optional: format for display
+          options += `<option value="${categoryValue}">${categoryDisplay}</option>`;
         });
         $("#pg-category").html(options);
+      } else {
+        $("#pg-category").html(
+          '<option value="">No categories available</option>'
+        );
       }
     }).fail(function () {
       $("#pg-category").html(
