@@ -13,13 +13,7 @@
                             <h2 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
                         </header>
                         <div class="entry-content">
-                            <?php
-                            if (is_home() || is_archive()) {
-                                the_excerpt();
-                            } else {
-                                the_content();
-                            }
-                            ?>
+                            <?php the_content(); ?>
                         </div>
                     </article>
                 <?php endwhile; ?>
