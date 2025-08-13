@@ -193,6 +193,18 @@ article:hover {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
 }
 
+.footer-widget article {
+  transform: none !important;
+}
+
+.footer-widget article footer {
+  background-image: none !important;
+}
+
+.footer-widget a {
+  color: #fff !important;
+}
+
 .entry-header {
   margin-bottom: 1.5rem;
 }

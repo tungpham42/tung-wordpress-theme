@@ -66,17 +66,6 @@ class Top_Header_Banner_Widget extends \Elementor\Widget_Base {
             ]
         );
 
-        $this->add_control(
-            'background_image',
-            [
-                'label' => __( 'Background Image', 'tungtheme' ),
-                'type' => \Elementor\Controls_Manager::MEDIA,
-                'default' => [
-                    'url' => \Elementor\Utils::get_placeholder_image_src(),
-                ],
-            ]
-        );
-
         $this->end_controls_section();
 
         // Style Section
@@ -88,6 +77,121 @@ class Top_Header_Banner_Widget extends \Elementor\Widget_Base {
             ]
         );
 
+        // Background Controls
+        $this->add_group_control(
+            \Elementor\Group_Control_Background::get_type(),
+            [
+                'name' => 'background',
+                'label' => __( 'Background', 'tungtheme' ),
+                'types' => [ 'classic', 'gradient' ],
+                'selector' => '{{WRAPPER}} .top-header-banner',
+            ]
+        );
+
+        $this->add_control(
+            'background_image',
+            [
+                'label' => __( 'Background Image', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => \Elementor\Utils::get_placeholder_image_src(),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner' => 'background-image: url({{URL}});',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'background_position',
+            [
+                'label' => __( 'Background Position', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => 'center center',
+                'options' => [
+                    'top left' => __( 'Top Left', 'tungtheme' ),
+                    'top center' => __( 'Top Center', 'tungtheme' ),
+                    'top right' => __( 'Top Right', 'tungtheme' ),
+                    'center left' => __( 'Center Left', 'tungtheme' ),
+                    'center center' => __( 'Center Center', 'tungtheme' ),
+                    'center right' => __( 'Center Right', 'tungtheme' ),
+                    'bottom left' => __( 'Bottom Left', 'tungtheme' ),
+                    'bottom center' => __( 'Bottom Center', 'tungtheme' ),
+                    'bottom right' => __( 'Bottom Right', 'tungtheme' ),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner' => 'background-position: {{VALUE}};',
+                ],
+                'condition' => [
+                    'background_image[url]!' => '',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'background_size',
+            [
+                'label' => __( 'Background Size', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => 'cover',
+                'options' => [
+                    'auto' => __( 'Auto', 'tungtheme' ),
+                    'cover' => __( 'Cover', 'tungtheme' ),
+                    'contain' => __( 'Contain', 'tungtheme' ),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner' => 'background-size: {{VALUE}};',
+                ],
+                'condition' => [
+                    'background_image[url]!' => '',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'background_repeat',
+            [
+                'label' => __( 'Background Repeat', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => 'no-repeat',
+                'options' => [
+                    'no-repeat' => __( 'No Repeat', 'tungtheme' ),
+                    'repeat' => __( 'Repeat', 'tungtheme' ),
+                    'repeat-x' => __( 'Repeat-X', 'tungtheme' ),
+                    'repeat-y' => __( 'Repeat-Y', 'tungtheme' ),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner' => 'background-repeat: {{VALUE}};',
+                ],
+                'condition' => [
+                    'background_image[url]!' => '',
+                ],
+            ]
+        );
+
+        // Border Controls
+        $this->add_group_control(
+            \Elementor\Group_Control_Border::get_type(),
+            [
+                'name' => 'border',
+                'label' => __( 'Border', 'tungtheme' ),
+                'selector' => '{{WRAPPER}} .top-header-banner',
+            ]
+        );
+
+        $this->add_control(
+            'border_radius',
+            [
+                'label' => __( 'Border Radius', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', '%', 'em' ],
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        // Typography Controls
         $this->add_group_control(
             \Elementor\Group_Control_Typography::get_type(),
             [
@@ -154,6 +258,14 @@ class Top_Header_Banner_Widget extends \Elementor\Widget_Base {
         );
 
         $this->add_group_control(
+            \Elementor\Group_Control_Text_Shadow::get_type(),
+            [
+                'name' => 'heading_text_shadow',
+                'selector' => '{{WRAPPER}} .top-header-banner h1',
+            ]
+        );
+
+        $this->add_group_control(
             \Elementor\Group_Control_Typography::get_type(),
             [
                 'name' => 'subheading_typography',
@@ -215,6 +327,14 @@ class Top_Header_Banner_Widget extends \Elementor\Widget_Base {
                 'selectors' => [
                     '{{WRAPPER}} .top-header-banner p' => 'color: {{VALUE}};',
                 ],
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Text_Shadow::get_type(),
+            [
+                'name' => 'subheading_text_shadow',
+                'selector' => '{{WRAPPER}} .top-header-banner p',
             ]
         );
 
@@ -295,12 +415,20 @@ class Top_Header_Banner_Widget extends \Elementor\Widget_Base {
             ]
         );
 
+        $this->add_group_control(
+            \Elementor\Group_Control_Text_Shadow::get_type(),
+            [
+                'name' => 'button_text_shadow',
+                'selector' => '{{WRAPPER}} .top-header-banner .elementor-button',
+            ]
+        );
+
         $this->end_controls_section();
     }
 
     protected function render() {
         $settings = $this->get_settings_for_display(); ?>
-        <section class="top-header-banner" style="background-image: url('<?php echo esc_url( $settings['background_image']['url'] ); ?>'); background-size:cover; background-position:center; padding:80px 20px; text-align:center;">
+        <section class="top-header-banner" style="padding:80px 20px; text-align:center;">
             <h1><?php echo esc_html( $settings['heading'] ); ?></h1>
             <p><?php echo esc_html( $settings['subheading'] ); ?></p>
             <a href="<?php echo esc_url( $settings['button_url']['url'] ); ?>" class="elementor-button elementor-size-lg">

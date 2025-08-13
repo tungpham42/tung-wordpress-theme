@@ -68,6 +68,121 @@ class Bottom_CTA_Banner_Widget extends \Elementor\Widget_Base {
             ]
         );
 
+        // Background Controls
+        $this->add_group_control(
+            \Elementor\Group_Control_Background::get_type(),
+            [
+                'name' => 'background',
+                'label' => __( 'Background', 'tungtheme' ),
+                'types' => [ 'classic', 'gradient' ],
+                'selector' => '{{WRAPPER}} .bottom-cta-banner',
+            ]
+        );
+
+        $this->add_control(
+            'background_image',
+            [
+                'label' => __( 'Background Image', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => '',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .bottom-cta-banner' => 'background-image: url({{URL}});',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'background_position',
+            [
+                'label' => __( 'Background Position', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => 'center center',
+                'options' => [
+                    'top left' => __( 'Top Left', 'tungtheme' ),
+                    'top center' => __( 'Top Center', 'tungtheme' ),
+                    'top right' => __( 'Top Right', 'tungtheme' ),
+                    'center left' => __( 'Center Left', 'tungtheme' ),
+                    'center center' => __( 'Center Center', 'tungtheme' ),
+                    'center right' => __( 'Center Right', 'tungtheme' ),
+                    'bottom left' => __( 'Bottom Left', 'tungtheme' ),
+                    'bottom center' => __( 'Bottom Center', 'tungtheme' ),
+                    'bottom right' => __( 'Bottom Right', 'tungtheme' ),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .bottom-cta-banner' => 'background-position: {{VALUE}};',
+                ],
+                'condition' => [
+                    'background_image[url]!' => '',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'background_size',
+            [
+                'label' => __( 'Background Size', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => 'cover',
+                'options' => [
+                    'auto' => __( 'Auto', 'tungtheme' ),
+                    'cover' => __( 'Cover', 'tungtheme' ),
+                    'contain' => __( 'Contain', 'tungtheme' ),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .bottom-cta-banner' => 'background-size: {{VALUE}};',
+                ],
+                'condition' => [
+                    'background_image[url]!' => '',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'background_repeat',
+            [
+                'label' => __( 'Background Repeat', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => 'no-repeat',
+                'options' => [
+                    'no-repeat' => __( 'No Repeat', 'tungtheme' ),
+                    'repeat' => __( 'Repeat', 'tungtheme' ),
+                    'repeat-x' => __( 'Repeat-X', 'tungtheme' ),
+                    'repeat-y' => __( 'Repeat-Y', 'tungtheme' ),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .bottom-cta-banner' => 'background-repeat: {{VALUE}};',
+                ],
+                'condition' => [
+                    'background_image[url]!' => '',
+                ],
+            ]
+        );
+
+        // Border Controls
+        $this->add_group_control(
+            \Elementor\Group_Control_Border::get_type(),
+            [
+                'name' => 'border',
+                'label' => __( 'Border', 'tungtheme' ),
+                'selector' => '{{WRAPPER}} .bottom-cta-banner',
+            ]
+        );
+
+        $this->add_control(
+            'border_radius',
+            [
+                'label' => __( 'Border Radius', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', '%', 'em' ],
+                'selectors' => [
+                    '{{WRAPPER}} .bottom-cta-banner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        // Typography Controls
         $this->add_group_control(
             \Elementor\Group_Control_Typography::get_type(),
             [
@@ -130,6 +245,14 @@ class Bottom_CTA_Banner_Widget extends \Elementor\Widget_Base {
                 'selectors' => [
                     '{{WRAPPER}} .bottom-cta-banner p' => 'color: {{VALUE}};',
                 ],
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Text_Shadow::get_type(),
+            [
+                'name' => 'cta_text_text_shadow',
+                'selector' => '{{WRAPPER}} .bottom-cta-banner p',
             ]
         );
 
@@ -210,12 +333,20 @@ class Bottom_CTA_Banner_Widget extends \Elementor\Widget_Base {
             ]
         );
 
+        $this->add_group_control(
+            \Elementor\Group_Control_Text_Shadow::get_type(),
+            [
+                'name' => 'button_text_shadow',
+                'selector' => '{{WRAPPER}} .bottom-cta-banner .elementor-button',
+            ]
+        );
+
         $this->end_controls_section();
     }
 
     protected function render() {
         $settings = $this->get_settings_for_display(); ?>
-        <section class="bottom-cta-banner" style="background:#333; padding:40px 20px; text-align:center;">
+        <section class="bottom-cta-banner" style="padding:40px 20px; text-align:center;">
             <p><?php echo esc_html( $settings['cta_text'] ); ?></p>
             <a href="<?php echo esc_url( $settings['button_url']['url'] ); ?>" class="elementor-button elementor-size-lg">
                 <?php echo esc_html( $settings['button_text'] ); ?>

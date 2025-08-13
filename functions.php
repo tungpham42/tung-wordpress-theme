@@ -16,7 +16,7 @@ function tungtheme_setup() {
 
     // Register footer widget area
     register_sidebar([
-        'name' => __('Footer Sidebar', 'tungtheme'),
+        'name' => __('Footer Widgets', 'tungtheme'),
         'id' => 'footer-sidebar',
         'before_widget' => '<div class="footer-widget">',
         'after_widget' => '</div>',
@@ -25,6 +25,11 @@ function tungtheme_setup() {
     ]);
 }
 add_action('after_setup_theme', 'tungtheme_setup');
+
+function tungtheme_disable_block_widgets() {
+    remove_theme_support( 'widgets-block-editor' );
+}
+add_action( 'after_setup_theme', 'tungtheme_disable_block_widgets' );
 
 /**
  * Enqueue theme styles and scripts
@@ -89,7 +94,7 @@ add_action('elementor/widgets/register', 'tungtheme_register_elementor_widgets')
  * Enqueue product gallery assets
  */
 function tungtheme_enqueue_assets() {
-    wp_enqueue_style('tungtheme-product-gallery', get_template_directory_uri() . '/assets/css/product-gallery.css', [], '2.0');
+    wp_enqueue_style('tungtheme-product-gallery', get_template_directory_uri() . '/assets/css/product-gallery.css', [], '2.1');
     wp_enqueue_script('tungtheme-product-gallery', get_template_directory_uri() . '/assets/js/product-gallery.js', ['jquery'], '1.8', true);
     wp_localize_script('tungtheme-product-gallery', 'tungtheme_pg', [
         'ajax_url' => admin_url('admin-ajax.php'),
