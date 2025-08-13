@@ -34,7 +34,7 @@ body.home h1.entry-title {
   display: none;
 }
 
-header {
+header:not(.entry-header) {
   background: linear-gradient(
     135deg,
     var(--primary-color),
