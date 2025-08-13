@@ -6,7 +6,6 @@ jQuery(document).ready(function ($) {
       if (Array.isArray(categories) && categories.length > 0) {
         let options = `<option value="">All Categories</option>`;
         categories.forEach((cat) => {
-          // assuming API returns { slug, name }
           categoryMap[cat.slug] = cat.name;
           options += `<option value="${cat.slug}">${cat.name}</option>`;
         });
@@ -19,9 +18,11 @@ jQuery(document).ready(function ($) {
     });
   }
 
-  // helper to get category name by slug
   function getCategoryName(slug) {
-    return categoryMap[slug] || slug;
+    return (
+      categoryMap[slug] ||
+      slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())
+    );
   }
 
   function loadProducts(category = "", sortBy = "") {

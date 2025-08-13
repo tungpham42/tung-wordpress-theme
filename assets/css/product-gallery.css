@@ -35,6 +35,36 @@
   transition: all 0.3s ease;
 }
 
+/* Dynamic grid columns based on data-items attribute */
+.tungtheme-product-gallery[data-items="1"] .pg-grid {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.tungtheme-product-gallery[data-items="2"] .pg-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.tungtheme-product-gallery[data-items="3"] .pg-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.tungtheme-product-gallery[data-items="4"] .pg-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.tungtheme-product-gallery[data-items="5"] .pg-grid {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.tungtheme-product-gallery[data-items="6"] .pg-grid {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+/* Fallback for invalid or missing data-items */
+.tungtheme-product-gallery .pg-grid {
+  grid-template-columns: repeat(4, 1fr); /* Default to 4 columns */
+}
+
 .pg-item {
   background: #fff;
   border: none;
@@ -43,6 +73,10 @@
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 300px; /* Ensure consistent height for alignment */
 }
 
 .pg-item:hover {
@@ -64,34 +98,56 @@
 .pg-item h3 {
   font-size: 18px;
   margin: 10px 0;
-  color: #333;
+  color: #333; /* Controlled by Elementor title_color */
+  flex-grow: 0;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.price {
+.pg-item:hover h3 {
+  transform: scale(1.03); /* Subtle scale effect on hover */
+}
+
+.pg-item .price {
   font-weight: 600;
   font-size: 20px;
-  color: #e67e22;
+  color: #e67e22; /* Controlled by Elementor price_color */
   margin: 10px 0;
+  flex-grow: 0;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.pg-item:hover .price {
+  transform: scale(1.03); /* Subtle scale effect on hover */
+}
+
+.pg-item .category {
+  display: block;
+  font-size: 14px;
+  color: #7f8c8d; /* Controlled by Elementor category_color */
+  margin: 5px 0;
+  flex-grow: 0;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.pg-item:hover .category {
+  transform: scale(1.03); /* Subtle scale effect on hover */
 }
 
 .pg-item a {
   display: inline-block;
   text-decoration: none;
-  color: #fff;
-  background-color: var(--accent-color) !important;
+  color: #fff; /* Controlled by Elementor button_color */
+  background-color: #3498db; /* Controlled by Elementor button_bg_color */
   padding: 0.75rem 1.5rem;
-  border-radius: 50px; /* Rounded, modern look */
-  margin: 1rem;
-  transition: background-color 0.3s ease;
+  border-radius: 50px;
+  margin-top: auto; /* Pushes button to the bottom */
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
 .pg-item a:hover {
-  background-color: var(--highlight-color) !important;
-  color: var(--primary-color) !important;
-}
-
-.pg-item span.category {
-  display: block;
+  background-color: #2980b9; /* Controlled by Elementor button_bg_color_hover */
+  color: #fff; /* Controlled by Elementor button_color_hover */
+  transform: translateY(-2px); /* Lift button slightly on hover */
 }
 
 .pg-loading {
@@ -112,18 +168,239 @@
   }
 }
 
-@media (min-width: 768px) {
-  .pg-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+/* Single Product Page Styles */
+.single-product-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.single-product-container .pg-loading {
+  display: none;
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #7f8c8d; /* Fallback, can be overridden */
+}
+
+.single-product-container .loading-spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid #3498db; /* Controlled by Elementor button_bg_color */
+  border-top: 3px solid #2980b9; /* Controlled by Elementor button_bg_color_hover */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 
-@media (max-width: 767px) {
-  .pg-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+.product-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.product-gallery {
+  flex: 1 1 50%;
+  min-width: 300px;
+}
+
+.product-gallery .main-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.product-thumbnails {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.product-thumbnails img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.product-thumbnails img:hover {
+  border-color: #2980b9; /* Controlled by Elementor button_bg_color_hover */
+}
+
+.product-info {
+  flex: 1 1 50%;
+  min-width: 300px;
+}
+
+.product-info h1 {
+  font-size: 28px;
+  margin: 0 0 10px;
+  color: #333; /* Controlled by Elementor title_color */
+  transition: color 0.3s ease;
+}
+
+.product-info:hover h1 {
+  color: #e67e22; /* Controlled by Elementor title_color_hover */
+}
+
+.product-info p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.product-info .category {
+  font-size: 14px;
+  color: #7f8c8d; /* Controlled by Elementor category_color */
+  transition: color 0.3s ease;
+}
+
+.product-info:hover .category {
+  color: #3498db; /* Controlled by Elementor category_color_hover */
+}
+
+.product-info .price {
+  font-size: 24px;
+  font-weight: 600;
+  color: #e67e22; /* Controlled by Elementor price_color */
+  margin: 10px 0;
+  transition: color 0.3s ease;
+}
+
+.product-info:hover .price {
+  color: #d35400; /* Controlled by Elementor price_color_hover */
+}
+
+.product-info .btn-add-cart {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff; /* Controlled by Elementor button_color */
+  background-color: #3498db; /* Controlled by Elementor button_bg_color */
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.product-info .btn-add-cart:hover {
+  background-color: #2980b9; /* Controlled by Elementor button_bg_color_hover */
+  color: #fff; /* Controlled by Elementor button_color_hover */
+  transform: translateY(-2px);
+}
+
+.related-products {
+  margin-top: 40px;
+}
+
+.related-products h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333; /* Controlled by Elementor title_color */
+  transition: color 0.3s ease;
+}
+
+.related-products:hover h2 {
+  color: #e67e22; /* Controlled by Elementor title_color_hover */
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.related-item {
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.related-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.related-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.related-item h3 {
+  font-size: 18px;
+  margin: 10px 0;
+  color: #333; /* Controlled by Elementor title_color */
+  transition: color 0.3s ease;
+}
+
+.related-item:hover h3 {
+  color: #e67e22; /* Controlled by Elementor title_color_hover */
+}
+
+.related-item .price {
+  font-weight: 600;
+  font-size: 18px;
+  color: #e67e22; /* Controlled by Elementor price_color */
+  margin: 10px 0;
+  transition: color 0.3s ease;
+}
+
+.related-item:hover .price {
+  color: #d35400; /* Controlled by Elementor price_color_hover */
+}
+
+.related-item a {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff; /* Controlled by Elementor button_color */
+  background-color: #3498db; /* Controlled by Elementor button_bg_color */
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.related-item a:hover {
+  background-color: #2980b9; /* Controlled by Elementor button_bg_color_hover */
+  color: #fff; /* Controlled by Elementor button_color_hover */
+  transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tungtheme-product-gallery[data-items] .pg-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
   }
-  .pg-filter {
+  .related-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .product-content {
     flex-direction: column;
-    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .tungtheme-product-gallery[data-items] .pg-grid {
+    grid-template-columns: 1fr; /* 1 column on very small screens */
+  }
+  .related-grid {
+    grid-template-columns: 1fr;
   }
 }

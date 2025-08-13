@@ -8,32 +8,14 @@ $product_id = get_query_var('custom_product_id');
 ?>
 
 <div id="single-product" class="single-product-container">
-    <div class="pg-loading" style="display:none;text-align:center;padding:2rem;font-size:1.2rem;color:var(--text-color);">
+    <div class="pg-loading" style="display:none;">
         <span class="loading-spinner"></span>Loading product...
     </div>
     <div class="product-content">
         <div class="product-details"></div>
     </div>
-    <div class="related-products"></div>
+    <div class="related-products tungtheme-product-gallery" data-items="3"></div> <!-- Added class and data-items for widget alignment -->
 </div>
-
-<style>
-.loading-spinner {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    border: 3px solid var(--accent-color);
-    border-top: 3px solid var(--highlight-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-right: 10px;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-</style>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -76,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
             <div class="product-info">
                 <h1>${product.title}</h1>
-                <p><strong>Category:</strong> ${categoryName}</p>
+                <span class="category"><strong>Category:</strong> ${categoryName}</span>
                 <p class="price">$${product.price}</p>
                 <p>${product.description}</p>
                 <button class="btn-add-cart">Add to Cart</button>
@@ -91,25 +73,41 @@ document.addEventListener("DOMContentLoaded", function() {
     fetch(`https://dummyjson.com/products/${productId}`)
         .then(res => res.json())
         .then(product => {
-            fetch(`https://dummyjson.com/products/category/${encodeURIComponent(product.category)}`)
+            fetch(`https://dummyjson.com/products/categories`)
                 .then(res => res.json())
-                .then(data => {
-                    relatedContainer.innerHTML = `
-                        <h2>Related Products</h2>
-                        <div class="related-grid">
-                            ${data.products
-                                .filter(p => p.id !== product.id)
-                                .slice(0, 6)
-                                .map(p => `
-                                    <div class="related-item">
-                                        <img src="${p.thumbnail}" alt="${p.title}">
-                                        <h3>${p.title}</h3>
-                                        <p class="price">$${p.price}</p>
-                                        <a href="/product/${p.id}" class="btn-view">View Product</a>
-                                    </div>
-                                `).join('')}
-                        </div>
-                    `;
+                .then(categories => {
+                    fetch(`https://dummyjson.com/products/category/${encodeURIComponent(product.category)}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            relatedContainer.innerHTML = `
+                                <h2>Related Products</h2>
+                                <div class="pg-grid"> <!-- Changed to pg-grid to match widget -->
+                                    ${data.products
+                                        .filter(p => p.id !== product.id)
+                                        .slice(0, 6)
+                                        .map(p => {
+                                            let categoryName;
+                                            if (categories.length && typeof categories[0] === "object" && categories[0].slug) {
+                                                const categoryObj = categories.find(cat => cat.slug === p.category);
+                                                categoryName = categoryObj ? categoryObj.name : p.category;
+                                            } else {
+                                                categoryName = p.category
+                                                    .replace(/-/g, " ")
+                                                    .replace(/\b\w/g, l => l.toUpperCase());
+                                            }
+                                            return `
+                                                <div class="pg-item"> <!-- Changed to pg-item to match widget -->
+                                                    <img src="${p.thumbnail}" alt="${p.title}">
+                                                    <h3>${p.title}</h3>
+                                                    <p class="price">$${p.price}</p>
+                                                    <span class="category">${categoryName}</span>
+                                                    <a href="/product/${p.id}" class="btn-view">View Product</a>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                </div>
+                            `;
+                        });
                 });
         })
         .catch(() => {

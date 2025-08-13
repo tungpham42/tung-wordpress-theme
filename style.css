@@ -307,24 +307,130 @@ img:hover {
   box-shadow: var(--card-shadow);
 }
 
+/* Single Product Styles */
 .product-info h1 {
-  font-size: 2rem;
-  color: var(--primary-color);
-  margin-bottom: 1.5rem;
-  font-weight: 800;
+  /* Title: Matches widget's .pg-item h3 defaults */
+  font-size: 2.5rem; /* Larger for single product emphasis; widget default is 1.4rem */
+  font-weight: 600;
+  color: #1e40af; /* Widget default title_color */
+  margin: 0 0 1rem;
+  text-shadow: none; /* Widget default; can be customized */
 }
 
 .product-info .price {
-  font-size: 1.8rem;
-  color: var(--price-color);
-  font-weight: 700;
-  margin-bottom: 1.5rem;
+  /* Price: Matches widget's .pg-item .price defaults */
+  font-size: 1.8rem; /* Larger for emphasis; widget default is 1.2rem */
+  font-weight: bold;
+  color: #ef4444; /* Widget default price_color */
+  margin: 0 0 1rem;
+  text-shadow: none; /* Widget default */
+}
+
+.product-info .category {
+  /* Category: Matches widget's .pg-item .category defaults */
+  display: block;
+  font-size: 1rem; /* Widget default */
+  color: #1f2937; /* Widget default category_color */
+  margin: 0 0 1rem;
+  text-shadow: none; /* Widget default */
+}
+
+.product-info .category:hover {
+  color: #facc15; /* Matches widget's category hover */
+}
+
+.btn-add-cart {
+  /* Button: Matches widget's .pg-item .btn-view defaults */
+  padding: 0.75rem 2rem;
+  background-color: #60a5fa; /* Widget default button_background_color */
+  color: #ffffff; /* Widget default button_text_color */
+  border-radius: 50px; /* Widget default border_radius (adjusted from slider default 4px for consistency) */
+  border-style: none; /* Widget default button_border_style */
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease,
+    box-shadow 0.3s ease;
+  text-shadow: none; /* Widget default */
+}
+
+.btn-add-cart:hover {
+  background-color: #facc15; /* Widget default button_background_color_hover */
+  color: #1e40af; /* Widget default button_text_color_hover */
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-shadow: none; /* Widget default */
+}
+
+/* Related Items Styles */
+.related-item h3 {
+  /* Title styles from widget: .pg-item h3 */
+  font-size: 1.4rem; /* Match widget's title size */
+  color: var(--primary-color, #1e40af); /* Match widget's default title color */
+  padding: 1rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.related-item h3:hover {
+  color: var(--highlight-color, #facc15); /* Match widget's title hover color */
+}
+
+.related-item .price {
+  /* Price styles from widget: .pg-item .price */
+  font-size: 1.2rem; /* Match widget's price size */
+  color: var(--price-color, #ef4444); /* Match widget's default price color */
+  padding: 0 1rem 1rem;
+}
+
+.related-item .btn-view {
+  /* Button styles from widget: .pg-item .btn-view */
   display: inline-block;
-  background: linear-gradient(
-    180deg,
-    transparent 65%,
-    var(--highlight-color) 35%
-  );
+  padding: 0.75rem 1.5rem;
+  background-color: var(
+    --accent-color,
+    #60a5fa
+  ); /* Match widget's default button background */
+  color: var(
+    --button-text-color,
+    #ffffff
+  ); /* Match widget's default button text color */
+  text-decoration: none;
+  border-radius: 50px; /* Match widget's default button radius */
+  margin: 1rem;
+  border-style: none; /* Match widget's default */
+  border-width: 1px; /* Match widget's default */
+  border-color: var(
+    --primary-color,
+    #1e40af
+  ); /* Match widget's default border color */
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.related-item .btn-view:hover {
+  background-color: var(
+    --highlight-color,
+    #facc15
+  ); /* Match widget's hover background */
+  color: var(--primary-color, #1e40af); /* Match widget's hover text color */
+  border-color: var(
+    --primary-color,
+    #1e40af
+  ); /* Match widget's hover border color */
+  transform: scale(1.05);
+}
+
+/* Optional: Add category to related items if desired */
+.related-item .category {
+  font-size: 1rem; /* Match widget's category size */
+  color: var(--text-color, #1f2937); /* Match widget's default category color */
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.related-item .category:hover {
+  color: var(--highlight-color, #facc15); /* Match widget's category hover */
 }
 
 .related-products {
@@ -337,8 +443,7 @@ img:hover {
   font-size: 2rem;
   color: var(--primary-color);
   text-align: center;
-  margin-bottom: 2rem;
-  font-weight: 700;
+  margin-bottom: 1.5rem;
 }
 
 .related-grid {
@@ -347,6 +452,24 @@ img:hover {
   gap: 2rem;
   max-width: 1280px;
   margin: 0 auto;
+}
+
+.pg-item .btn-view,
+.related-products .pg-item .btn-view {
+  /* Ensure button consistency */
+  background-color: #60a5fa;
+  color: #ffffff;
+  border-style: none;
+  border-width: 1px; /* Widget default if enabled */
+  border-color: #1e40af; /* Widget default button_border_color */
+  border-radius: 50px; /* Adjusted for consistency */
+}
+
+.pg-item .btn-view:hover,
+.related-products .pg-item .btn-view:hover {
+  background-color: #facc15;
+  color: #1e40af;
+  border-color: #1e40af; /* Widget default button_border_color_hover */
 }
 
 /* Ensure 3 columns for 6 related products on desktops */
@@ -384,7 +507,91 @@ img:hover {
   border-radius: 12px 12px 0 0;
 }
 
-.related-item h3 {
+.tungtheme-product-gallery {
+  max-width: 1280px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+}
+
+.pg-filter {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.pg-select {
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--text-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.pg-select:hover {
+  border-color: var(--highlight-color);
+  background: #fff;
+}
+
+.pg-loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.pg-loading .loading-spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--accent-color);
+  border-top: 3px solid var(--highlight-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.pg-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.pg-grid .pg-item {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pg-grid .pg-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.pg-item img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+.pg-item h3 {
   font-size: 1.4rem;
   color: var(--primary-color);
   padding: 1rem;
@@ -392,59 +599,62 @@ img:hover {
   font-weight: 600;
 }
 
-.related-item .price {
-  font-size: 1.2rem;
-  color: var(--price-color);
-  padding: 0 1rem 1rem;
+.pg-item h3:hover {
+  color: var(--highlight-color);
 }
 
-.related-item .btn-view {
+.pg-item .price {
+  font-size: 1.2rem;
+  color: var(--price-color);
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}
+
+.pg-item .category {
+  display: block;
+  font-size: 1rem;
+  color: var(--text-color);
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}
+
+.pg-item .category:hover {
+  color: var(--highlight-color);
+}
+
+.pg-item .btn-view {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  background: var(--accent-color);
-  color: #fff;
   text-decoration: none;
   border-radius: 50px;
   margin: 1rem;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.related-item .btn-view:hover {
-  background: var(--highlight-color);
-  color: var(--primary-color);
-  transform: scale(1.05);
-}
-
-.btn-add-cart {
-  display: inline-block;
-  padding: 0.75rem 2rem;
-  background: var(--highlight-color);
-  color: var(--primary-color);
-  text-decoration: none;
-  border-radius: 50px;
   font-weight: 600;
-  font-size: 1.1rem;
-  text-align: center;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
-.btn-add-cart:hover {
-  background: var(--accent-color);
-  color: #fff;
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+/* Dynamic grid columns based on items per row */
+.tungtheme-product-gallery[data-items="1"] .pg-grid {
+  grid-template-columns: 1fr;
 }
 
-.elementor-section {
-  margin: 0;
-  padding: 0;
+.tungtheme-product-gallery[data-items="2"] .pg-grid {
+  grid-template-columns: repeat(2, 1fr);
 }
 
-.elementor-container {
-  max-width: 1280px;
-  margin: 0 auto;
+.tungtheme-product-gallery[data-items="3"] .pg-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.tungtheme-product-gallery[data-items="4"] .pg-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.tungtheme-product-gallery[data-items="5"] .pg-grid {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.tungtheme-product-gallery[data-items="6"] .pg-grid {
+  grid-template-columns: repeat(6, 1fr);
 }
 
 /* Tablets (≥768px) */
@@ -505,6 +715,12 @@ img:hover {
   .product-content {
     grid-template-columns: 1fr;
   }
+
+  .tungtheme-product-gallery[data-items="4"] .pg-grid,
+  .tungtheme-product-gallery[data-items="5"] .pg-grid,
+  .tungtheme-product-gallery[data-items="6"] .pg-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* Small Mobile (≤480px) */
@@ -520,6 +736,14 @@ img:hover {
 
   .site-title {
     font-size: 1.4rem;
+  }
+
+  .tungtheme-product-gallery[data-items="2"] .pg-grid,
+  .tungtheme-product-gallery[data-items="3"] .pg-grid,
+  .tungtheme-product-gallery[data-items="4"] .pg-grid,
+  .tungtheme-product-gallery[data-items="5"] .pg-grid,
+  .tungtheme-product-gallery[data-items="6"] .pg-grid {
+    grid-template-columns: 1fr;
   }
 }
 

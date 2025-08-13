@@ -424,6 +424,64 @@ class Top_Header_Banner_Widget extends \Elementor\Widget_Base {
         );
 
         $this->end_controls_section();
+
+        // Hover Style Section
+        $this->start_controls_section(
+            'hover_style_section',
+            [
+                'label' => __( 'Hover Style', 'tungtheme' ),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'button_hover_color',
+            [
+                'label' => __( 'Button Hover Text Color', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'default' => '#ffffff',
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner .elementor-button:hover' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'button_hover_bg_color',
+            [
+                'label' => __( 'Button Hover Background Color', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'default' => '#222222',
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner .elementor-button:hover' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'button_hover_transition',
+            [
+                'label' => __( 'Transition Duration', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => [ 's' ],
+                'range' => [
+                    's' => [
+                        'min' => 0,
+                        'max' => 2,
+                        'step' => 0.1,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 's',
+                    'size' => 0.3,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner .elementor-button' => 'transition: all {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
     }
 
     protected function render() {
