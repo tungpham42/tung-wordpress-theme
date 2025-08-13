@@ -30,7 +30,7 @@ body {
   transition: background-color 0.3s ease;
 }
 
-body.home h1.entry-title {
+body.home header.entry-header {
   display: none;
 }
 
