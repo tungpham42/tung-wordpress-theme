@@ -1,7 +1,7 @@
 # Tung Pham's Homework for WordPress Engineer position at CBTW
 
-## Demo: [https://khach.soft.io.vn/](https://khach.soft.io.vn/)
+## Demo: [https://cbtw.soft.io.vn/](https://cbtw.soft.io.vn/)
 
-## Login URL: [https://khach.soft.io.vn/wp-admin/](https://khach.soft.io.vn/wp-admin/)
+## Login URL: [https://cbtw.soft.io.vn/wp-admin/](https://cbtw.soft.io.vn/wp-admin/)
 
-## Account: khach , Password: KH@CHv0d0i
+## Account: cbtw , Password: P@SSword

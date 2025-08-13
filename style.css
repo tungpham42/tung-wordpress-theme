@@ -44,7 +44,7 @@ header:not(.entry-header) {
   padding: 1.5rem 2rem;
   box-shadow: var(--card-shadow);
   position: sticky;
-  top: 0;
+  top: 2rem;
   z-index: 1000;
   animation: slideIn 0.5s ease-out;
 }
@@ -268,6 +268,7 @@ img:hover {
   display: flex;
   justify-content: center;
   gap: 2rem;
+  width: 100%;
 }
 
 .product-gallery {

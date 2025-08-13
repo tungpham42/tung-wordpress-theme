@@ -191,6 +191,94 @@ class Top_Header_Banner_Widget extends \Elementor\Widget_Base {
             ]
         );
 
+        // Button Border Controls
+        $this->add_control(
+            'button_border_style',
+            [
+                'label' => __( 'Button Border Style', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => 'none',
+                'options' => [
+                    'none' => __( 'None', 'tungtheme' ),
+                    'solid' => __( 'Solid', 'tungtheme' ),
+                    'dashed' => __( 'Dashed', 'tungtheme' ),
+                    'dotted' => __( 'Dotted', 'tungtheme' ),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner .elementor-button' => 'border-style: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'button_border_width',
+            [
+                'label' => __( 'Button Border Width', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => [ 'px' ],
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 10,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 1,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner .elementor-button' => 'border-width: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'button_border_style!' => 'none',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'button_border_color',
+            [
+                'label' => __( 'Button Border Color', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'default' => '#333333',
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner .elementor-button' => 'border-color: {{VALUE}};',
+                ],
+                'condition' => [
+                    'button_border_style!' => 'none',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'button_border_radius',
+            [
+                'label' => __( 'Button Border Radius', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => [ 'px', '%' ],
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 50,
+                        'step' => 1,
+                    ],
+                    '%' => [
+                        'min' => 0,
+                        'max' => 100,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 4,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner .elementor-button' => 'border-radius: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
         // Typography Controls
         $this->add_group_control(
             \Elementor\Group_Control_Typography::get_type(),
@@ -454,6 +542,93 @@ class Top_Header_Banner_Widget extends \Elementor\Widget_Base {
                 'default' => '#222222',
                 'selectors' => [
                     '{{WRAPPER}} .top-header-banner .elementor-button:hover' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'button_hover_border_style',
+            [
+                'label' => __( 'Button Hover Border Style', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => 'none',
+                'options' => [
+                    'none' => __( 'None', 'tungtheme' ),
+                    'solid' => __( 'Solid', 'tungtheme' ),
+                    'dashed' => __( 'Dashed', 'tungtheme' ),
+                    'dotted' => __( 'Dotted', 'tungtheme' ),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner .elementor-button:hover' => 'border-style: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'button_hover_border_width',
+            [
+                'label' => __( 'Button Hover Border Width', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => [ 'px' ],
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 10,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 1,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner .elementor-button:hover' => 'border-width: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'button_hover_border_style!' => 'none',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'button_hover_border_color',
+            [
+                'label' => __( 'Button Hover Border Color', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'default' => '#222222',
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner .elementor-button:hover' => 'border-color: {{VALUE}};',
+                ],
+                'condition' => [
+                    'button_hover_border_style!' => 'none',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'button_hover_border_radius',
+            [
+                'label' => __( 'Button Hover Border Radius', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => [ 'px', '%' ],
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 50,
+                        'step' => 1,
+                    ],
+                    '%' => [
+                        'min' => 0,
+                        'max' => 100,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 4,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner .elementor-button:hover' => 'border-radius: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );

@@ -211,7 +211,7 @@
 }
 
 .product-gallery {
-  flex: 1 1 50%;
+  flex: 1 1 100%;
 }
 
 .product-gallery .main-image {
@@ -243,7 +243,7 @@
 }
 
 .product-info {
-  flex: 1 1 50%;
+  flex: 1 1 100%;
 }
 
 .product-info h1 {
