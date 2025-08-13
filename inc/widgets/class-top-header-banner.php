@@ -8,7 +8,7 @@ class Top_Header_Banner_Widget extends \Elementor\Widget_Base {
     }
 
     public function get_title() {
-        return __( 'Top Header Banner', 'tungtheme' );
+        return __( 'Tung\'s Top Header Banner', 'tungtheme' );
     }
 
     public function get_icon() {

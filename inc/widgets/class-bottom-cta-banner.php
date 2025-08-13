@@ -8,7 +8,7 @@ class Bottom_CTA_Banner_Widget extends \Elementor\Widget_Base {
     }
 
     public function get_title() {
-        return __( 'Bottom CTA Banner', 'tungtheme' );
+        return __( 'Tung\'s Bottom CTA Banner', 'tungtheme' );
     }
 
     public function get_icon() {
