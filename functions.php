@@ -115,37 +115,6 @@ add_action('elementor/query/product_query', function($query) {
     }
 });
 
-/**
- * Register custom rewrite rule for product pages
- */
-add_action('init', function() {
-    add_rewrite_rule(
-        '^product/([0-9]+)/?$',
-        'index.php?post_type=page&pagename=single-product&product_id=$matches[1]',
-        'top'
-    );
-});
-
-/**
- * Add product_id to query vars
- */
-add_filter('query_vars', function($vars) {
-    $vars[] = 'product_id';
-    return $vars;
-});
-
-/**
- * Set product_id as meta for single-product page
- */
-add_action('template_redirect', function() {
-    if (is_page('single-product') && $product_id = get_query_var('product_id')) {
-        global $wp_query;
-        $wp_query->set('is_single', true); // Ensure Elementor recognizes this as a single page
-        update_post_meta(get_the_ID(), '_tungtheme_product_id', $product_id);
-    }
-});
-
-
 // Redirect /product/:id to WooCommerce single-product.php template
 add_action('init', function () {
     add_rewrite_rule(
@@ -153,6 +122,7 @@ add_action('init', function () {
         'index.php?custom_product_id=$matches[1]',
         'top'
     );
+    flush_rewrite_rules();
 });
 
 add_filter('query_vars', function ($query_vars) {
