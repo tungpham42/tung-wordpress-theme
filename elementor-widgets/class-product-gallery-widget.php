@@ -27,10 +27,26 @@ class TungTheme_Product_Gallery_Widget extends Widget_Base {
             'tab'   => Controls_Manager::TAB_CONTENT,
         ]);
 
+        // Gallery Title Control
+        $this->add_control('gallery_title', [
+            'label' => __('Gallery Title', 'tungtheme'),
+            'type' => Controls_Manager::TEXT,
+            'default' => __('Our Products', 'tungtheme'),
+            'placeholder' => __('Enter gallery title', 'tungtheme'),
+        ]);
+
+        // Gallery Description Control
+        $this->add_control('gallery_description', [
+            'label' => __('Gallery Description', 'tungtheme'),
+            'type' => Controls_Manager::TEXTAREA,
+            'default' => __('Browse our collection of premium products.', 'tungtheme'),
+            'placeholder' => __('Enter gallery description', 'tungtheme'),
+        ]);
+
         $this->add_control('items_per_row', [
             'label' => __('Items per Row', 'tungtheme'),
             'type' => Controls_Manager::NUMBER,
-            'default' => 4,
+            'default' => 3,
             'min' => 1,
             'max' => 6,
             'description' => __('Set the number of items per row in the gallery.', 'tungtheme'),
@@ -43,10 +59,124 @@ class TungTheme_Product_Gallery_Widget extends Widget_Base {
             'tab'   => Controls_Manager::TAB_STYLE,
         ]);
 
+        // Gallery Title Controls
+        $this->add_control('gallery_title_heading', [
+            'label' => __('Gallery Title', 'tungtheme'),
+            'type' => Controls_Manager::HEADING,
+        ]);
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'gallery_title_typography',
+                'label' => __('Gallery Title Typography', 'tungtheme'),
+                'selector' => '{{WRAPPER}} .pg-title',
+            ]
+        );
+
+        $this->add_control('gallery_title_color', [
+            'label' => __('Gallery Title Color', 'tungtheme'),
+            'type' => Controls_Manager::COLOR,
+            'default' => '#1e40af',
+            'selectors' => [
+                '{{WRAPPER}} .pg-title' => 'color: {{VALUE}};',
+            ],
+        ]);
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Text_Shadow::get_type(),
+            [
+                'name' => 'gallery_title_text_shadow',
+                'label' => __('Gallery Title Text Shadow', 'tungtheme'),
+                'selector' => '{{WRAPPER}} .pg-title',
+            ]
+        );
+
+        $this->add_control('gallery_title_align', [
+            'label' => __('Gallery Title Alignment', 'tungtheme'),
+            'type' => Controls_Manager::CHOOSE,
+            'options' => [
+                'left' => [
+                    'title' => __('Left', 'tungtheme'),
+                    'icon' => 'eicon-text-align-left',
+                ],
+                'center' => [
+                    'title' => __('Center', 'tungtheme'),
+                    'icon' => 'eicon-text-align-center',
+                ],
+                'right' => [
+                    'title' => __('Right', 'tungtheme'),
+                    'icon' => 'eicon-text-align-right',
+                ],
+            ],
+            'default' => 'center',
+            'selectors' => [
+                '{{WRAPPER}} .pg-title' => 'text-align: {{VALUE}};',
+            ],
+        ]);
+
+        // Gallery Description Controls
+        $this->add_control('gallery_description_heading', [
+            'label' => __('Gallery Description', 'tungtheme'),
+            'type' => Controls_Manager::HEADING,
+            'separator' => 'before',
+        ]);
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'gallery_description_typography',
+                'label' => __('Gallery Description Typography', 'tungtheme'),
+                'selector' => '{{WRAPPER}} .pg-description',
+            ]
+        );
+
+        $this->add_control('gallery_description_color', [
+            'label' => __('Gallery Description Color', 'tungtheme'),
+            'type' => Controls_Manager::COLOR,
+            'default' => '#1f2937',
+            'selectors' => [
+                '{{WRAPPER}} .pg-description' => 'color: {{VALUE}};',
+            ],
+        ]);
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Text_Shadow::get_type(),
+            [
+                'name' => 'gallery_description_text_shadow',
+                'label' => __('Gallery Description Text Shadow', 'tungtheme'),
+                'selector' => '{{WRAPPER}} .pg-description',
+            ]
+        );
+
+        $this->add_control('gallery_description_align', [
+            'label' => __('Gallery Description Alignment', 'tungtheme'),
+            'type' => Controls_Manager::CHOOSE,
+            'options' => [
+                'left' => [
+                    'title' => __('Left', 'tungtheme'),
+                    'icon' => 'eicon-text-align-left',
+                ],
+                'center' => [
+                    'title' => __('Center', 'tungtheme'),
+                    'icon' => 'eicon-text-align-center',
+                ],
+                'right' => [
+                    'title' => __('Right', 'tungtheme'),
+                    'icon' => 'eicon-text-align-right',
+                ],
+            ],
+            'default' => 'center',
+            'selectors' => [
+                '{{WRAPPER}} .pg-description' => 'text-align: {{VALUE}};',
+            ],
+        ]);
+
         // Title Controls
         $this->add_control('title_heading', [
             'label' => __('Title', 'tungtheme'),
             'type' => Controls_Manager::HEADING,
+            'separator' => 'before',
         ]);
 
         $this->add_group_control(
@@ -163,7 +293,7 @@ class TungTheme_Product_Gallery_Widget extends Widget_Base {
         $this->add_control('button_background_color', [
             'label' => __('Button Background Color', 'tungtheme'),
             'type' => Controls_Manager::COLOR,
-            'default' => '#60a5fa',
+            'default' => '#60A5FA',
             'selectors' => [
                 '{{WRAPPER}} .pg-item .btn-view' => 'background-color: {{VALUE}};',
             ],
@@ -255,7 +385,7 @@ class TungTheme_Product_Gallery_Widget extends Widget_Base {
             ],
             'default' => [
                 'unit' => 'px',
-                'size' => 4,
+                'size' => 50,
             ],
             'selectors' => [
                 '{{WRAPPER}} .pg-item .btn-view' => 'border-radius: {{SIZE}}{{UNIT}};',
@@ -272,7 +402,7 @@ class TungTheme_Product_Gallery_Widget extends Widget_Base {
         $this->add_control('button_background_color_hover', [
             'label' => __('Button Hover Background Color', 'tungtheme'),
             'type' => Controls_Manager::COLOR,
-            'default' => '#facc15',
+            'default' => '#FACC15',
             'selectors' => [
                 '{{WRAPPER}} .pg-item .btn-view:hover' => 'background-color: {{VALUE}};',
             ],
@@ -281,7 +411,7 @@ class TungTheme_Product_Gallery_Widget extends Widget_Base {
         $this->add_control('button_text_color_hover', [
             'label' => __('Button Hover Text Color', 'tungtheme'),
             'type' => Controls_Manager::COLOR,
-            'default' => '#1e40af',
+            'default' => '#1E40AF',
             'selectors' => [
                 '{{WRAPPER}} .pg-item .btn-view:hover' => 'color: {{VALUE}};',
             ],
@@ -326,7 +456,7 @@ class TungTheme_Product_Gallery_Widget extends Widget_Base {
             ],
             'default' => [
                 'unit' => 'px',
-                'size' => 4,
+                'size' => 50,
             ],
             'selectors' => [
                 '{{WRAPPER}} .pg-item .btn-view:hover' => 'border-radius: {{SIZE}}{{UNIT}};',
@@ -340,6 +470,12 @@ class TungTheme_Product_Gallery_Widget extends Widget_Base {
         $settings = $this->get_settings_for_display();
         ?>
         <div class="tungtheme-product-gallery" data-items="<?php echo esc_attr($settings['items_per_row']); ?>">
+            <?php if (!empty($settings['gallery_title'])) : ?>
+                <h2 class="pg-title"><?php echo esc_html($settings['gallery_title']); ?></h2>
+            <?php endif; ?>
+            <?php if (!empty($settings['gallery_description'])) : ?>
+                <p class="pg-description"><?php echo esc_html($settings['gallery_description']); ?></p>
+            <?php endif; ?>
             <div class="pg-filter">
                 <select id="pg-category" class="pg-select">
                     <option value="">All Categories</option>
