@@ -4,7 +4,7 @@ Theme URI: https://github.com/tungpham42/tung-wordpress-theme
 Author: Tung Pham
 Author URI: https://tungpham42.github.io
 Description: Tung's theme with Elementor and single product page
-Version: 1.1
+Version: 1.2
 License: GNU General Public License v2 or later
 Text Domain: tung-wordpress-theme
 */
@@ -44,7 +44,7 @@ header:not(.entry-header) {
   padding: 1.5rem 2rem;
   box-shadow: var(--card-shadow);
   position: sticky;
-  top: 2rem;
+  top: 0;
   z-index: 1000;
   animation: slideIn 0.5s ease-out;
 }
