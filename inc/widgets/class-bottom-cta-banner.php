@@ -40,6 +40,15 @@ class Bottom_CTA_Banner_Widget extends \Elementor\Widget_Base {
         );
 
         $this->add_control(
+            'description_text',
+            [
+                'label' => __( 'Description Text', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::TEXTAREA,
+                'default' => __( 'Join us today and take the first step towards success!', 'tungtheme' ),
+            ]
+        );
+
+        $this->add_control(
             'button_text',
             [
                 'label' => __( 'Button Text', 'tungtheme' ),
@@ -276,7 +285,7 @@ class Bottom_CTA_Banner_Widget extends \Elementor\Widget_Base {
             [
                 'name' => 'cta_text_typography',
                 'label' => __( 'CTA Text Typography', 'tungtheme' ),
-                'selector' => '{{WRAPPER}} .bottom-cta-banner p',
+                'selector' => '{{WRAPPER}} .bottom-cta-banner p.cta-text',
             ]
         );
 
@@ -296,7 +305,7 @@ class Bottom_CTA_Banner_Widget extends \Elementor\Widget_Base {
                     'size' => 24,
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .bottom-cta-banner p' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .bottom-cta-banner p.cta-text' => 'font-size: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -319,7 +328,7 @@ class Bottom_CTA_Banner_Widget extends \Elementor\Widget_Base {
                     '900' => __( '900 (Black)', 'tungtheme' ),
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .bottom-cta-banner p' => 'font-weight: {{VALUE}};',
+                    '{{WRAPPER}} .bottom-cta-banner p.cta-text' => 'font-weight: {{VALUE}};',
                 ],
             ]
         );
@@ -331,7 +340,7 @@ class Bottom_CTA_Banner_Widget extends \Elementor\Widget_Base {
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'default' => '#ffffff',
                 'selectors' => [
-                    '{{WRAPPER}} .bottom-cta-banner p' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .bottom-cta-banner p.cta-text' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -340,7 +349,101 @@ class Bottom_CTA_Banner_Widget extends \Elementor\Widget_Base {
             \Elementor\Group_Control_Text_Shadow::get_type(),
             [
                 'name' => 'cta_text_text_shadow',
-                'selector' => '{{WRAPPER}} .bottom-cta-banner p',
+                'selector' => '{{WRAPPER}} .bottom-cta-banner p.cta-text',
+            ]
+        );
+
+        // Description Text Controls
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'description_text_typography',
+                'label' => __( 'Description Text Typography', 'tungtheme' ),
+                'selector' => '{{WRAPPER}} .bottom-cta-banner p.description-text',
+            ]
+        );
+
+        $this->add_control(
+            'description_text_font_size',
+            [
+                'label' => __( 'Description Text Font Size', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => [ 'px', 'em', 'rem' ],
+                'range' => [
+                    'px' => [ 'min' => 10, 'max' => 40 ],
+                    'em' => [ 'min' => 0.8, 'max' => 4 ],
+                    'rem' => [ 'min' => 0.8, 'max' => 4 ],
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 18,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .bottom-cta-banner p.description-text' => 'font-size: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'description_text_font_weight',
+            [
+                'label' => __( 'Description Text Font Weight', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => '300',
+                'options' => [
+                    '100' => __( '100 (Thin)', 'tungtheme' ),
+                    '200' => __( '200 (Extra Light)', 'tungtheme' ),
+                    '300' => __( '300 (Light)', 'tungtheme' ),
+                    '400' => __( '400 (Normal)', 'tungtheme' ),
+                    '500' => __( '500 (Medium)', 'tungtheme' ),
+                    '600' => __( '600 (Semi Bold)', 'tungtheme' ),
+                    '700' => __( '700 (Bold)', 'tungtheme' ),
+                    '800' => __( '800 (Extra Bold)', 'tungtheme' ),
+                    '900' => __( '900 (Black)', 'tungtheme' ),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .bottom-cta-banner p.description-text' => 'font-weight: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'description_text_color',
+            [
+                'label' => __( 'Description Text Color', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'default' => '#ffffff',
+                'selectors' => [
+                    '{{WRAPPER}} .bottom-cta-banner p.description-text' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Text_Shadow::get_type(),
+            [
+                'name' => 'description_text_text_shadow',
+                'selector' => '{{WRAPPER}} .bottom-cta-banner p.description-text',
+            ]
+        );
+
+        $this->add_control(
+            'description_text_margin',
+            [
+                'label' => __( 'Description Text Margin', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', 'em', '%' ],
+                'default' => [
+                    'top' => 10,
+                    'right' => 0,
+                    'bottom' => 20,
+                    'left' => 0,
+                    'unit' => 'px',
+                    'isLinked' => false,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .bottom-cta-banner p.description-text' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
             ]
         );
 
@@ -580,7 +683,8 @@ class Bottom_CTA_Banner_Widget extends \Elementor\Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display(); ?>
         <section class="bottom-cta-banner" style="padding:40px 20px; text-align:center;">
-            <p><?php echo esc_html( $settings['cta_text'] ); ?></p>
+            <p class="cta-text"><?php echo esc_html( $settings['cta_text'] ); ?></p>
+            <p class="description-text"><?php echo esc_html( $settings['description_text'] ); ?></p>
             <a href="<?php echo esc_url( $settings['button_url']['url'] ); ?>" class="elementor-button elementor-size-lg">
                 <?php echo esc_html( $settings['button_text'] ); ?>
             </a>

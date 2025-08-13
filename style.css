@@ -34,6 +34,18 @@ body.home header.entry-header {
   display: none;
 }
 
+body.home main > article {
+  padding: 0 !important;
+}
+
+body.home main > article:hover {
+  transform: none !important;
+}
+
+body.home .e-con-inner {
+  padding-block-start: 0 !important;
+}
+
 header:not(.entry-header) {
   background: linear-gradient(
     135deg,
@@ -133,6 +145,11 @@ a.site-logo {
 
 .hamburger:hover {
   transform: rotate(90deg);
+}
+
+.top-header-banner a.elementor-button,
+.bottom-cta-banner a.elementor-button {
+  display: unset !important;
 }
 
 footer {

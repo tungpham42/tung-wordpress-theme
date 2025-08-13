@@ -66,6 +66,18 @@ class Top_Header_Banner_Widget extends \Elementor\Widget_Base {
             ]
         );
 
+        $this->add_control(
+            'fluid_container',
+            [
+                'label' => __( 'Fluid Container', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SWITCHER,
+                'label_on' => __( 'Yes', 'tungtheme' ),
+                'label_off' => __( 'No', 'tungtheme' ),
+                'default' => 'yes',
+                'description' => __( 'Enable to make the banner stretch to full viewport width.', 'tungtheme' ),
+            ]
+        );
+
         $this->end_controls_section();
 
         // Style Section
@@ -187,6 +199,38 @@ class Top_Header_Banner_Widget extends \Elementor\Widget_Base {
                 'size_units' => [ 'px', '%', 'em' ],
                 'selectors' => [
                     '{{WRAPPER}} .top-header-banner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        // Content Width Control for Non-Fluid Layout
+        $this->add_control(
+            'content_width',
+            [
+                'label' => __( 'Content Width', 'tungtheme' ),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => [ 'px', '%' ],
+                'range' => [
+                    'px' => [
+                        'min' => 300,
+                        'max' => 1400,
+                        'step' => 10,
+                    ],
+                    '%' => [
+                        'min' => 50,
+                        'max' => 100,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 1200,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .top-header-banner .content-container' => 'max-width: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'fluid_container!' => 'yes',
                 ],
             ]
         );
@@ -660,13 +704,20 @@ class Top_Header_Banner_Widget extends \Elementor\Widget_Base {
     }
 
     protected function render() {
-        $settings = $this->get_settings_for_display(); ?>
-        <section class="top-header-banner" style="padding:80px 20px; text-align:center;">
-            <h1><?php echo esc_html( $settings['heading'] ); ?></h1>
-            <p><?php echo esc_html( $settings['subheading'] ); ?></p>
-            <a href="<?php echo esc_url( $settings['button_url']['url'] ); ?>" class="elementor-button elementor-size-lg">
-                <?php echo esc_html( $settings['button_text'] ); ?>
-            </a>
+        $settings = $this->get_settings_for_display();
+        $is_fluid = $settings['fluid_container'] === 'yes';
+        $section_styles = $is_fluid
+            ? 'width: calc(100vw - 15px); margin: 0; padding: 80px 20px; text-align: center; box-sizing: border-box; position: relative; left: 50%; transform: translateX(-50%);'
+            : 'width: 100%; margin: 0; padding: 80px 20px; text-align: center; box-sizing: border-box;';
+        ?>
+        <section class="top-header-banner" style="<?php echo esc_attr( $section_styles ); ?>">
+            <div class="content-container" style="<?php echo $is_fluid ? 'max-width: 1200px; margin: 0 auto;' : ''; ?>">
+                <h1><?php echo esc_html( $settings['heading'] ); ?></h1>
+                <p><?php echo esc_html( $settings['subheading'] ); ?></p>
+                <a href="<?php echo esc_url( $settings['button_url']['url'] ); ?>" class="elementor-button elementor-size-lg">
+                    <?php echo esc_html( $settings['button_text'] ); ?>
+                </a>
+            </div>
         </section>
     <?php }
 }
