@@ -1,9 +1,13 @@
 jQuery(document).ready(function ($) {
+  let categoryMap = {}; // store slug -> name mapping
+
   function loadCategories() {
     $.get("https://dummyjson.com/products/categories", function (categories) {
       if (Array.isArray(categories) && categories.length > 0) {
         let options = `<option value="">All Categories</option>`;
         categories.forEach((cat) => {
+          // assuming API returns { slug, name }
+          categoryMap[cat.slug] = cat.name;
           options += `<option value="${cat.slug}">${cat.name}</option>`;
         });
         $("#pg-category").html(options);
@@ -13,6 +17,11 @@ jQuery(document).ready(function ($) {
         '<option value="">Error loading categories</option>'
       );
     });
+  }
+
+  // helper to get category name by slug
+  function getCategoryName(slug) {
+    return categoryMap[slug] || slug;
   }
 
   function loadProducts(category = "", sortBy = "") {
@@ -45,8 +54,10 @@ jQuery(document).ready(function ($) {
           <img src="${p.thumbnail}" alt="${p.title}">
           <h3>${p.title}</h3>
           <p class="price">$${p.price}</p>
-          <span class="category">${p.category}</span>
-          <a href="${window.location.origin}/product/${p.id}" class="btn-view">View Details</a>
+          <span class="category">${getCategoryName(p.category)}</span>
+          <a href="${window.location.origin}/product/${
+              p.id
+            }" class="btn-view">View Details</a>
         </div>
       `
           )

@@ -1,38 +1,129 @@
 .tungtheme-product-gallery {
-  padding: 20px;
+  padding: 30px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f0 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
+
 .pg-filter {
   display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 15px;
+  margin-bottom: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
+
 .pg-filter select {
-  padding: 5px;
-  border: 1px solid #ccc;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.pg-filter select:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
 .pg-grid {
   display: grid;
-  gap: 15px;
+  gap: 20px;
+  transition: all 0.3s ease;
 }
+
 .pg-item {
-  border: 1px solid #eee;
-  padding: 10px;
+  background: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
 }
+
+.pg-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
 .pg-item img {
   max-width: 100%;
   height: auto;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
 }
+
+.pg-item:hover img {
+  transform: scale(1.05);
+}
+
+.pg-item h3 {
+  font-size: 18px;
+  margin: 10px 0;
+  color: #333;
+}
+
 .price {
-  font-weight: bold;
-  color: #27ae60;
+  font-weight: 600;
+  font-size: 20px;
+  color: #e67e22;
+  margin: 10px 0;
 }
+
+.pg-item a {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  background-color: var(--accent-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px; /* Rounded, modern look */
+  margin: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.pg-item a:hover {
+  background-color: var(--highlight-color);
+  color: var(--primary-color);
+}
+
+.pg-item span.category {
+  display: block;
+}
+
 .pg-loading {
   text-align: center;
+  font-size: 18px;
+  color: #7f8c8d;
   display: none;
+  animation: fade 1.5s infinite;
 }
+
+@keyframes fade {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 @media (min-width: 768px) {
   .pg-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .pg-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+  .pg-filter {
+    flex-direction: column;
+    align-items: center;
   }
 }

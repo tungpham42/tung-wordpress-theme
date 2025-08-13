@@ -7,72 +7,125 @@ get_header();
 $product_id = get_query_var('custom_product_id');
 ?>
 
-<div id="single-product" class="container" style="padding:20px;">
-    <div class="pg-loading" style="display:none;">Loading product...</div>
-    <div class="product-details"></div>
+<div id="single-product" class="single-product-container">
+    <div class="pg-loading" style="display:none;text-align:center;padding:2rem;font-size:1.2rem;color:var(--text-color);">
+        <span class="loading-spinner"></span>Loading product...
+    </div>
+    <div class="product-content">
+        <div class="product-details"></div>
+    </div>
     <div class="related-products"></div>
 </div>
+
+<style>
+.loading-spinner {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 3px solid var(--accent-color);
+    border-top: 3px solid var(--highlight-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const productContainer = document.querySelector(".product-details");
     const relatedContainer = document.querySelector(".related-products");
     const loader = document.querySelector(".pg-loading");
-    const productId = <?php echo $product_id; ?>;
+    const productId = <?php echo json_encode($product_id); ?>;
 
     if (!productId) {
-        productContainer.innerHTML = "<p>Invalid product ID.</p>";
+        productContainer.innerHTML = `<p style="color:var(--price-color);text-align:center;">Invalid product ID.</p>`;
         return;
     }
 
     loader.style.display = "block";
 
-    // Fetch product details
+    Promise.all([
+        fetch(`https://dummyjson.com/products/${productId}`).then(res => res.json()),
+        fetch('https://dummyjson.com/products/categories').then(res => res.json())
+    ])
+    .then(([product, categories]) => {
+        let categoryName;
+        if (categories.length && typeof categories[0] === "object" && categories[0].slug) {
+            const categoryObj = categories.find(cat => cat.slug === product.category);
+            categoryName = categoryObj ? categoryObj.name : product.category;
+        } else {
+            categoryName = product.category
+                .replace(/-/g, " ")
+                .replace(/\b\w/g, l => l.toUpperCase());
+        }
+
+        loader.style.display = "none";
+        productContainer.innerHTML = `
+            <div class="product-gallery">
+                <img src="${product.thumbnail}" alt="${product.title}" class="main-image">
+                <div class="product-thumbnails">
+                    ${product.images.map(img => `
+                        <img src="${img}" alt="Thumbnail" onclick="changeImage('${img}', this)">
+                    `).join('')}
+                </div>
+            </div>
+            <div class="product-info">
+                <h1>${product.title}</h1>
+                <p><strong>Category:</strong> ${categoryName}</p>
+                <p class="price">$${product.price}</p>
+                <p>${product.description}</p>
+                <button class="btn-add-cart">Add to Cart</button>
+            </div>
+        `;
+    })
+    .catch(err => {
+        loader.style.display = "none";
+        productContainer.innerHTML = `<p style="color:var(--price-color);text-align:center;">Error loading product: ${err.message}</p>`;
+    });
+
     fetch(`https://dummyjson.com/products/${productId}`)
         .then(res => res.json())
         .then(product => {
-            loader.style.display = "none";
-            productContainer.innerHTML = `
-                <div style="display:flex;gap:20px;flex-wrap:wrap;">
-                    <div style="flex:1;min-width:300px;">
-                        <img src="${product.thumbnail}" alt="${product.title}" style="max-width:100%;border-radius:8px;">
-                        <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
-                            ${product.images.map(img => `<img src="${img}" style="width:80px;height:80px;object-fit:cover;border-radius:4px;">`).join('')}
-                        </div>
-                    </div>
-                    <div style="flex:1;min-width:300px;">
-                        <h1>${product.title}</h1>
-                        <p><strong>Category:</strong> ${product.category}</p>
-                        <p><strong>Price:</strong> $${product.price}</p>
-                        <p>${product.description}</p>
-                    </div>
-                </div>
-            `;
-
-            // Fetch related products
             fetch(`https://dummyjson.com/products/category/${encodeURIComponent(product.category)}`)
                 .then(res => res.json())
                 .then(data => {
                     relatedContainer.innerHTML = `
-                        <h2 style="margin-top:40px;">Related Products</h2>
-                        <div style="display:flex;gap:20px;flex-wrap:wrap;">
-                            ${data.products.filter(p => p.id !== product.id).map(p => `
-                                <div style="flex:1;min-width:200px;max-width:200px;border:1px solid #ddd;border-radius:8px;padding:10px;text-align:center;">
-                                    <img src="${p.thumbnail}" style="width:100%;border-radius:4px;">
-                                    <h4>${p.title}</h4>
-                                    <p>$${p.price}</p>
-                                    <a href="/product/${p.id}" class="btn-view">View</a>
-                                </div>
-                            `).join('')}
+                        <h2>Related Products</h2>
+                        <div class="related-grid">
+                            ${data.products
+                                .filter(p => p.id !== product.id)
+                                .slice(0, 6)
+                                .map(p => `
+                                    <div class="related-item">
+                                        <img src="${p.thumbnail}" alt="${p.title}">
+                                        <h3>${p.title}</h3>
+                                        <p class="price">$${p.price}</p>
+                                        <a href="/product/${p.id}" class="btn-view">View Product</a>
+                                    </div>
+                                `).join('')}
                         </div>
                     `;
                 });
         })
         .catch(() => {
             loader.style.display = "none";
-            productContainer.innerHTML = "<p>Error loading product.</p>";
+            productContainer.innerHTML = `<p style="color:var(--price-color);text-align:center;">Error loading product.</p>`;
         });
 });
+
+function changeImage(src, element) {
+    const mainImage = document.querySelector('.main-image');
+    mainImage.src = src;
+    document.querySelectorAll('.product-thumbnails img').forEach(img => {
+        img.style.borderColor = 'transparent';
+    });
+    element.style.borderColor = 'var(--highlight-color)';
+}
 </script>
 
 <?php get_footer(); ?>
