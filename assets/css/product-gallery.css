@@ -62,7 +62,7 @@
 
 /* Fallback for invalid or missing data-items */
 .tungtheme-product-gallery .pg-grid {
-  grid-template-columns: repeat(4, 1fr); /* Default to 4 columns */
+  grid-template-columns: repeat(3, 1fr); /* Default to 3 columns */
 }
 
 .pg-item {
@@ -212,11 +212,11 @@
 
 .product-gallery {
   flex: 1 1 50%;
-  min-width: 300px;
 }
 
 .product-gallery .main-image {
   max-width: 100%;
+  width: 100%;
   height: auto;
   border-radius: 8px;
   margin-bottom: 10px;
@@ -244,7 +244,6 @@
 
 .product-info {
   flex: 1 1 50%;
-  min-width: 300px;
 }
 
 .product-info h1 {
@@ -384,12 +383,21 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .tungtheme-product-gallery[data-items] .pg-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+    grid-template-columns: repeat(2, 1fr);
   }
   .related-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .tungtheme-product-gallery[data-items] .pg-grid {
+    grid-template-columns: 1fr; /* 2 columns on smaller screens */
+  }
+  .related-grid {
+    grid-template-columns: 1fr;
   }
   .product-content {
     flex-direction: column;
