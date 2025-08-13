@@ -14,7 +14,7 @@ $product_id = get_query_var('custom_product_id');
     <div class="product-content">
         <div class="product-details"></div>
     </div>
-    <div class="related-products tungtheme-product-gallery" data-items="3"></div> <!-- Added class and data-items for widget alignment -->
+    <div class="related-products tungtheme-product-gallery" data-items="3"></div>
 </div>
 
 <script>
@@ -46,6 +46,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 .replace(/\b\w/g, l => l.toUpperCase());
         }
 
+        // Calculate discounted price
+        const discountPercentage = product.discountPercentage || 0;
+        const discountedPrice = discountPercentage > 0 
+            ? (product.price * (1 - discountPercentage / 100)).toFixed(2) 
+            : null;
+
         loader.style.display = "none";
         productContainer.innerHTML = `
             <div class="product-gallery">
@@ -59,7 +65,13 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="product-info">
                 <h1>${product.title}</h1>
                 <span class="category"><strong>Category:</strong> ${categoryName}</span>
-                <p class="price">$${product.price}</p>
+                <div class="price-container">
+                    <p class="price">$${discountedPrice || product.price}</p>
+                    ${discountPercentage > 0 ? `
+                        <p class="original-price">$${product.price}</p>
+                        <span class="discount-badge">${discountPercentage}% OFF</span>
+                    ` : ''}
+                </div>
                 <p>${product.description}</p>
             </div>
         `;
@@ -80,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         .then(data => {
                             relatedContainer.innerHTML = `
                                 <h2>Related Products</h2>
-                                <div class="pg-grid"> <!-- Changed to pg-grid to match widget -->
+                                <div class="pg-grid">
                                     ${data.products
                                         .filter(p => p.id !== product.id)
                                         .slice(0, 6)
@@ -94,11 +106,22 @@ document.addEventListener("DOMContentLoaded", function() {
                                                     .replace(/-/g, " ")
                                                     .replace(/\b\w/g, l => l.toUpperCase());
                                             }
+                                            // Calculate discounted price for related products
+                                            const discountPercentage = p.discountPercentage || 0;
+                                            const discountedPrice = discountPercentage > 0 
+                                                ? (p.price * (1 - discountPercentage / 100)).toFixed(2) 
+                                                : null;
                                             return `
-                                                <div class="pg-item"> <!-- Changed to pg-item to match widget -->
+                                                <div class="pg-item">
                                                     <img src="${p.thumbnail}" alt="${p.title}">
                                                     <h3>${p.title}</h3>
-                                                    <p class="price">$${p.price}</p>
+                                                    <div class="price-container">
+                                                        <p class="price">$${discountedPrice || p.price}</p>
+                                                        ${discountPercentage > 0 ? `
+                                                            <p class="original-price">$${p.price}</p>
+                                                            <span class="discount-badge">${discountPercentage}% OFF</span>
+                                                        ` : ''}
+                                                    </div>
                                                     <span class="category">${categoryName}</span>
                                                     <a href="/product/${p.id}" class="btn-view">View Product</a>
                                                 </div>

@@ -310,128 +310,130 @@ img:hover {
 
 /* Single Product Styles */
 .product-info h1 {
-  /* Title: Matches widget's .pg-item h3 defaults */
-  font-size: 2.5rem; /* Larger for single product emphasis; widget default is 1.4rem */
+  font-size: 2.5rem;
   font-weight: 600;
-  color: #1e40af; /* Widget default title_color */
+  color: #1e40af;
   margin: 0 0 1rem;
-  text-shadow: none; /* Widget default; can be customized */
+  text-shadow: none;
 }
 
 .product-info .price {
-  /* Price: Matches widget's .pg-item .price defaults */
-  font-size: 1.8rem; /* Larger for emphasis; widget default is 1.2rem */
+  font-size: 1.8rem;
   font-weight: bold;
-  color: #ef4444; /* Widget default price_color */
-  margin: 0 0 1rem;
-  text-shadow: none; /* Widget default */
+  color: #ef4444;
+  margin: 0;
+  text-shadow: none;
 }
 
 .product-info .category {
-  /* Category: Matches widget's .pg-item .category defaults */
   display: block;
-  font-size: 1rem; /* Widget default */
-  color: #1f2937; /* Widget default category_color */
+  font-size: 1rem;
+  color: #1f2937;
   margin: 0 0 1rem;
-  text-shadow: none; /* Widget default */
+  text-shadow: none;
 }
 
 .product-info .category:hover {
-  color: #facc15; /* Matches widget's category hover */
+  color: #facc15;
 }
 
 .btn-add-cart {
-  /* Button: Matches widget's .pg-item .btn-view defaults */
   padding: 0.75rem 2rem;
-  background-color: #60a5fa; /* Widget default button_background_color */
-  color: #ffffff; /* Widget default button_text_color */
-  border-radius: 50px; /* Widget default border_radius (adjusted from slider default 4px for consistency) */
-  border-style: none; /* Widget default button_border_style */
+  background-color: #60a5fa;
+  color: #ffffff;
+  border-radius: 50px;
+  border-style: none;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
   transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease,
     box-shadow 0.3s ease;
-  text-shadow: none; /* Widget default */
+  text-shadow: none;
 }
 
 .btn-add-cart:hover {
-  background-color: #facc15; /* Widget default button_background_color_hover */
-  color: #1e40af; /* Widget default button_text_color_hover */
+  background-color: #facc15;
+  color: #1e40af;
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  text-shadow: none; /* Widget default */
+  text-shadow: none;
+}
+
+/* Price and Discount Styles */
+.price-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.original-price {
+  font-size: 1.2rem;
+  color: #6b7280; /* Neutral gray for original price */
+  text-decoration: line-through;
+}
+
+.discount-badge {
+  font-size: 14px;
+  font-weight: 600;
+  color: #16a34a;
+  background-color: #dcfce7;
+  padding: 4px 8px;
+  border-radius: 12px;
+  flex-grow: 0;
+  transition: transform 0.3s ease;
 }
 
 /* Related Items Styles */
 .related-item h3 {
-  /* Title styles from widget: .pg-item h3 */
-  font-size: 1.4rem; /* Match widget's title size */
-  color: var(--primary-color, #1e40af); /* Match widget's default title color */
+  font-size: 1.4rem;
+  color: var(--primary-color, #1e40af);
   padding: 1rem;
   margin: 0;
   font-weight: 600;
 }
 
 .related-item h3:hover {
-  color: var(--highlight-color, #facc15); /* Match widget's title hover color */
+  color: var(--highlight-color, #facc15);
 }
 
 .related-item .price {
-  /* Price styles from widget: .pg-item .price */
-  font-size: 1.2rem; /* Match widget's price size */
-  color: var(--price-color, #ef4444); /* Match widget's default price color */
+  font-size: 1.2rem;
+  color: var(--price-color, #ef4444);
   padding: 0 1rem 1rem;
 }
 
 .related-item .btn-view {
-  /* Button styles from widget: .pg-item .btn-view */
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  background-color: var(
-    --accent-color,
-    #60a5fa
-  ); /* Match widget's default button background */
-  color: var(
-    --button-text-color,
-    #ffffff
-  ); /* Match widget's default button text color */
+  background-color: var(--accent-color, #60a5fa);
+  color: var(--button-text-color, #ffffff);
   text-decoration: none;
-  border-radius: 50px; /* Match widget's default button radius */
+  border-radius: 50px;
   margin: 1rem;
-  border-style: none; /* Match widget's default */
-  border-width: 1px; /* Match widget's default */
-  border-color: var(
-    --primary-color,
-    #1e40af
-  ); /* Match widget's default border color */
+  border-style: none;
+  border-width: 1px;
+  border-color: var(--primary-color, #1e40af);
   transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
 .related-item .btn-view:hover {
-  background-color: var(
-    --highlight-color,
-    #facc15
-  ); /* Match widget's hover background */
-  color: var(--primary-color, #1e40af); /* Match widget's hover text color */
-  border-color: var(
-    --primary-color,
-    #1e40af
-  ); /* Match widget's hover border color */
+  background-color: var(--highlight-color, #facc15);
+  color: var(--primary-color, #1e40af);
+  border-color: var(--primary-color, #1e40af);
   transform: scale(1.05);
 }
 
-/* Optional: Add category to related items if desired */
 .related-item .category {
-  font-size: 1rem; /* Match widget's category size */
-  color: var(--text-color, #1f2937); /* Match widget's default category color */
+  font-size: 1rem;
+  color: var(--text-color, #1f2937);
   padding: 0 1rem;
   margin-bottom: 1rem;
   display: block;
 }
 
 .related-item .category:hover {
-  color: var(--highlight-color, #facc15); /* Match widget's category hover */
+  color: var(--highlight-color, #facc15);
 }
 
 .related-products {
@@ -457,20 +459,19 @@ img:hover {
 
 .pg-item .btn-view,
 .related-products .pg-item .btn-view {
-  /* Ensure button consistency */
   background-color: #60a5fa;
   color: #ffffff;
   border-style: none;
-  border-width: 1px; /* Widget default if enabled */
-  border-color: #1e40af; /* Widget default button_border_color */
-  border-radius: 50px; /* Adjusted for consistency */
+  border-width: 1px;
+  border-color: #1e40af;
+  border-radius: 50px;
 }
 
 .pg-item .btn-view:hover,
 .related-products .pg-item .btn-view:hover {
   background-color: #facc15;
   color: #1e40af;
-  border-color: #1e40af; /* Widget default button_border_color_hover */
+  border-color: #1e40af;
 }
 
 /* Ensure 3 columns for 6 related products on desktops */

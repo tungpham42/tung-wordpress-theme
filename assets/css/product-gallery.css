@@ -76,7 +76,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 300px; /* Ensure consistent height for alignment */
+  min-height: 320px; /* Adjusted for discount */
 }
 
 .pg-item:hover {
@@ -107,16 +107,44 @@
   transform: scale(1.03); /* Subtle scale effect on hover */
 }
 
+.price-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+
 .pg-item .price {
   font-weight: 600;
   font-size: 20px;
   color: #e67e22; /* Controlled by Elementor price_color */
-  margin: 10px 0;
   flex-grow: 0;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.pg-item:hover .price {
+.pg-item .original-price {
+  font-size: 16px;
+  color: #7f8c8d;
+  text-decoration: line-through;
+  flex-grow: 0;
+}
+
+.pg-item .discount {
+  font-size: 14px;
+  font-weight: 600;
+  color: #16a34a; /* Controlled by Elementor discount_color */
+  background-color: #dcfce7; /* Controlled by Elementor discount_background_color */
+  padding: 4px 8px;
+  border-radius: 12px;
+  flex-grow: 0;
+  transition: transform 0.3s ease;
+}
+
+.pg-item:hover .price,
+.pg-item:hover .original-price,
+.pg-item:hover .discount {
   transform: scale(1.03); /* Subtle scale effect on hover */
 }
 
@@ -272,16 +300,38 @@
   color: #3498db; /* Controlled by Elementor category_color_hover */
 }
 
+.product-info .price-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 10px 0;
+}
+
 .product-info .price {
   font-size: 24px;
   font-weight: 600;
   color: #e67e22; /* Controlled by Elementor price_color */
-  margin: 10px 0;
   transition: color 0.3s ease;
 }
 
 .product-info:hover .price {
   color: #d35400; /* Controlled by Elementor price_color_hover */
+}
+
+.product-info .original-price {
+  font-size: 18px;
+  color: #7f8c8d;
+  text-decoration: line-through;
+}
+
+.product-info .discount {
+  font-size: 16px;
+  font-weight: 600;
+  color: #16a34a; /* Controlled by Elementor discount_color */
+  background-color: #dcfce7; /* Controlled by Elementor discount_background_color */
+  padding: 4px 8px;
+  border-radius: 12px;
 }
 
 .product-info .btn-add-cart {
@@ -354,16 +404,38 @@
   color: #e67e22; /* Controlled by Elementor title_color_hover */
 }
 
+.related-item .price-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 10px 0;
+}
+
 .related-item .price {
   font-weight: 600;
   font-size: 18px;
   color: #e67e22; /* Controlled by Elementor price_color */
-  margin: 10px 0;
   transition: color 0.3s ease;
 }
 
 .related-item:hover .price {
   color: #d35400; /* Controlled by Elementor price_color_hover */
+}
+
+.related-item .original-price {
+  font-size: 14px;
+  color: #7f8c8d;
+  text-decoration: line-through;
+}
+
+.related-item .discount {
+  font-size: 14px;
+  font-weight: 600;
+  color: #16a34a; /* Controlled by Elementor discount_color */
+  background-color: #dcfce7; /* Controlled by Elementor discount_background_color */
+  padding: 4px 8px;
+  border-radius: 12px;
 }
 
 .related-item a {

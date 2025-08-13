@@ -42,26 +42,50 @@ jQuery(document).ready(function ($) {
         if (sortBy === "title_asc")
           products.sort((a, b) => a.title.localeCompare(b.title));
         else if (sortBy === "title_desc")
-          products.sort((a, b) => b.title.localeCompare(a.title));
+          products.sort((a, b) => b.title.localeCompare(b.title));
         else if (sortBy === "price_asc")
           products.sort((a, b) => a.price - b.price);
         else if (sortBy === "price_desc")
           products.sort((a, b) => b.price - a.price);
+        else if (sortBy === "discount_asc")
+          products.sort(
+            (a, b) => (a.discountPercentage || 0) - (b.discountPercentage || 0)
+          );
+        else if (sortBy === "discount_desc")
+          products.sort(
+            (a, b) => (b.discountPercentage || 0) - (a.discountPercentage || 0)
+          );
 
         let html = products
-          .map(
-            (p) => `
-        <div class="pg-item">
-          <img src="${p.thumbnail}" alt="${p.title}">
-          <h3>${p.title}</h3>
-          <p class="price">$${p.price}</p>
-          <span class="category">${getCategoryName(p.category)}</span>
-          <a href="${window.location.origin}/product/${
+          .map((p) => {
+            const discount = p.discountPercentage ? p.discountPercentage : 0;
+            const discountedPrice = discount
+              ? (p.price * (1 - discount / 100)).toFixed(2)
+              : p.price;
+            return `
+                <div class="pg-item">
+                  <img src="${p.thumbnail}" alt="${p.title}">
+                  <h3>${p.title}</h3>
+                  <div class="price-container">
+                    <p class="price">$${discountedPrice}</p>
+                    ${
+                      discount
+                        ? `<p class="original-price">$${p.price.toFixed(2)}</p>`
+                        : ""
+                    }
+                    ${
+                      discount
+                        ? `<span class="discount">${discount}% OFF</span>`
+                        : ""
+                    }
+                  </div>
+                  <span class="category">${getCategoryName(p.category)}</span>
+                  <a href="${window.location.origin}/product/${
               p.id
             }" class="btn-view">View Details</a>
-        </div>
-      `
-          )
+                </div>
+              `;
+          })
           .join("");
         $(".pg-grid").html(html);
       } else {
