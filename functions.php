@@ -7,8 +7,7 @@ if (!defined('ABSPATH')) exit;
 function tungtheme_setup() {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
-    add_theme_support('woocommerce');
-    add_theme_support('elementor', ['post-types' => ['page', 'post', 'product'], 'theme_builder']);
+    add_theme_support('elementor', ['post-types' => ['page', 'post'], 'theme_builder']);
 
     register_nav_menus([
         'primary' => __('Primary Navigation', 'tungtheme'),
@@ -120,7 +119,7 @@ add_action('elementor/query/product_query', function($query) {
     }
 });
 
-// Redirect /product/:id to WooCommerce single-product.php template
+// Redirect /product/:id to single-product.php template
 add_action('init', function () {
     add_rewrite_rule(
         '^product/([0-9]+)/?$',
@@ -138,10 +137,9 @@ add_filter('query_vars', function ($query_vars) {
 add_action('template_include', function ($template) {
     $custom_id = get_query_var('custom_product_id');
     if ($custom_id) {
-        // Force WooCommerce single product template from theme
-        $woocommerce_template = get_stylesheet_directory() . '/woocommerce/single-product.php';
-        if (file_exists($woocommerce_template)) {
-            return $woocommerce_template;
+        $single_product_template = get_stylesheet_directory() . '/single-product.php';
+        if (file_exists($single_product_template)) {
+            return $single_product_template;
         }
     }
     return $template;
