@@ -61,7 +61,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 <span class="category"><strong>Category:</strong> ${categoryName}</span>
                 <p class="price">$${product.price}</p>
                 <p>${product.description}</p>
-                <button class="btn-add-cart">Add to Cart</button>
             </div>
         `;
     })
