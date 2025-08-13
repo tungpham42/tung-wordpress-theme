@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const productContainer = document.querySelector(".product-details");
     const relatedContainer = document.querySelector(".related-products");
     const loader = document.querySelector(".pg-loading");
-    const productId = <?php echo json_encode($product_id); ?>;
+    const productId = <?php echo $product_id; ?>;
 
     if (!productId) {
         productContainer.innerHTML = "<p>Invalid product ID.</p>";
