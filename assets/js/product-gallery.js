@@ -29,7 +29,7 @@ jQuery(document).ready(function ($) {
     $(".pg-loading").show();
     $(".pg-grid").empty();
 
-    let apiUrl = "https://dummyjson.com/products";
+    let apiUrl = "https://dummyjson.com/products?limit=0";
     if (category) {
       apiUrl += `/category/${encodeURIComponent(category)}`;
     }
