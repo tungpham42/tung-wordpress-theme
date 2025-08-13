@@ -4,4 +4,4 @@
 
 ## Login URL: [https://cbtw.soft.io.vn/wp-admin/](https://cbtw.soft.io.vn/wp-admin/)
 
-## Account: cbtw , Password: P@SSword
+## Account: cbtw , Password: !30eQb3emXaZnUxa!t9^SfLI
