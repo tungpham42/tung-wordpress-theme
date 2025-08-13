@@ -1,5 +1,31 @@
 jQuery(document).ready(function ($) {
   let categoryMap = {}; // store slug -> name mapping
+  const itemsPerPage = 30; // Number of items per page
+  let currentPage = 1; // Track current page
+  let allProducts = []; // Store all products
+  let totalProducts = 0; // Track total number of products
+
+  // Get URL parameters
+  function getUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      category: params.get("category") || "",
+      sort: params.get("sort") || "",
+      page: parseInt(params.get("page")) || 1,
+    };
+  }
+
+  // Update URL parameters
+  function updateUrlParams(category, sort, page) {
+    const params = new URLSearchParams();
+    if (category) params.set("category", category);
+    if (sort) params.set("sort", sort);
+    if (page && page !== 1) params.set("page", page);
+    const newUrl = `${window.location.pathname}${
+      params.toString() ? "?" + params.toString() : ""
+    }`;
+    window.history.pushState({}, "", newUrl);
+  }
 
   function loadCategories() {
     $.get("https://dummyjson.com/products/categories", function (categories) {
@@ -10,6 +36,9 @@ jQuery(document).ready(function ($) {
           options += `<option value="${cat.slug}">${cat.name}</option>`;
         });
         $("#pg-category").html(options);
+        // Set initial category from URL
+        const params = getUrlParams();
+        $("#pg-category").val(params.category);
       }
     }).fail(function () {
       $("#pg-category").html(
@@ -25,70 +54,128 @@ jQuery(document).ready(function ($) {
     );
   }
 
-  function loadProducts(category = "", sortBy = "") {
+  function renderPagination(totalItems, category, sort) {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    let paginationHtml = '<div class="pg-pagination">';
+
+    // Previous button
+    paginationHtml += `<button class="pg-page-btn" ${
+      currentPage === 1 ? "disabled" : ""
+    } data-page="${currentPage - 1}">Prev</button>`;
+
+    // Page numbers
+    for (let i = 1; i <= totalPages; i++) {
+      paginationHtml += `<button class="pg-page-btn${
+        i === currentPage ? " active" : ""
+      }" data-page="${i}">${i}</button>`;
+    }
+
+    // Next button
+    paginationHtml += `<button class="pg-page-btn" ${
+      currentPage === totalPages ? "disabled" : ""
+    } data-page="${currentPage + 1}">Next</button>`;
+
+    paginationHtml += "</div>";
+    $(".pg-grid").after(paginationHtml);
+
+    // Bind click events to pagination buttons
+    $(".pg-page-btn").on("click", function () {
+      if (!$(this).is("[disabled]")) {
+        currentPage = parseInt($(this).data("page"));
+        updateUrlParams(category, sort, currentPage);
+        renderProducts(category, sort);
+      }
+    });
+  }
+
+  function sortProducts(products, sortBy) {
+    if (sortBy === "title_asc")
+      return products.sort((a, b) => a.title.localeCompare(b.title));
+    else if (sortBy === "title_desc")
+      return products.sort((a, b) => b.title.localeCompare(a.title));
+    else if (sortBy === "price_asc")
+      return products.sort((a, b) => a.price - b.price);
+    else if (sortBy === "price_desc")
+      return products.sort((a, b) => b.price - a.price);
+    return products;
+  }
+
+  function renderProducts(category = "", sortBy = "") {
     $(".pg-loading").show();
     $(".pg-grid").empty();
+    $(".pg-pagination").remove(); // Remove existing pagination
 
+    // Filter products by category
+    let filteredProducts = category
+      ? allProducts.filter((p) => p.category === category)
+      : [...allProducts];
+
+    // Sort products
+    filteredProducts = sortProducts(filteredProducts, sortBy);
+    totalProducts = filteredProducts.length;
+
+    // Paginate products
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+    $(".pg-loading").hide();
+    if (paginatedProducts.length > 0) {
+      let html = paginatedProducts
+        .map((p) => {
+          const discount = p.discountPercentage ? p.discountPercentage : 0;
+          const discountedPrice = discount
+            ? (p.price * (1 - discount / 100)).toFixed(2)
+            : p.price;
+          return `
+              <div class="pg-item">
+                <img src="${p.thumbnail}" alt="${p.title}">
+                <h3>${p.title}</h3>
+                <div class="price-container">
+                  <p class="price">$${discountedPrice}</p>
+                  ${
+                    discount
+                      ? `<p class="original-price">$${p.price.toFixed(2)}</p>`
+                      : ""
+                  }
+                  ${
+                    discount
+                      ? `<span class="discount">${discount}% OFF</span>`
+                      : ""
+                  }
+                </div>
+                <span class="category">${getCategoryName(p.category)}</span>
+                <a href="${window.location.origin}/product/${
+            p.id
+          }" class="btn-view">View Details</a>
+              </div>
+            `;
+        })
+        .join("");
+      $(".pg-grid").html(html);
+
+      // Render pagination controls
+      renderPagination(totalProducts, category, sortBy);
+    } else {
+      $(".pg-grid").html("<p>No products found</p>");
+    }
+  }
+
+  function loadProducts(category = "", sortBy = "") {
+    $(".pg-loading").show();
     let apiUrl = "https://dummyjson.com/products?limit=0";
     if (category) {
-      apiUrl += `/category/${encodeURIComponent(category)}`;
+      apiUrl = `https://dummyjson.com/products/category/${encodeURIComponent(
+        category
+      )}?limit=0`;
     }
 
     $.get(apiUrl, function (response) {
-      $(".pg-loading").hide();
       if (response && response.products && response.products.length > 0) {
-        let products = response.products;
-
-        if (sortBy === "title_asc")
-          products.sort((a, b) => a.title.localeCompare(b.title));
-        else if (sortBy === "title_desc")
-          products.sort((a, b) => b.title.localeCompare(b.title));
-        else if (sortBy === "price_asc")
-          products.sort((a, b) => a.price - b.price);
-        else if (sortBy === "price_desc")
-          products.sort((a, b) => b.price - a.price);
-        else if (sortBy === "discount_asc")
-          products.sort(
-            (a, b) => (a.discountPercentage || 0) - (b.discountPercentage || 0)
-          );
-        else if (sortBy === "discount_desc")
-          products.sort(
-            (a, b) => (b.discountPercentage || 0) - (a.discountPercentage || 0)
-          );
-
-        let html = products
-          .map((p) => {
-            const discount = p.discountPercentage ? p.discountPercentage : 0;
-            const discountedPrice = discount
-              ? (p.price * (1 - discount / 100)).toFixed(2)
-              : p.price;
-            return `
-                <div class="pg-item">
-                  <img src="${p.thumbnail}" alt="${p.title}">
-                  <h3>${p.title}</h3>
-                  <div class="price-container">
-                    <p class="price">$${discountedPrice}</p>
-                    ${
-                      discount
-                        ? `<p class="original-price">$${p.price.toFixed(2)}</p>`
-                        : ""
-                    }
-                    ${
-                      discount
-                        ? `<span class="discount">${discount}% OFF</span>`
-                        : ""
-                    }
-                  </div>
-                  <span class="category">${getCategoryName(p.category)}</span>
-                  <a href="${window.location.origin}/product/${
-              p.id
-            }" class="btn-view">View Details</a>
-                </div>
-              `;
-          })
-          .join("");
-        $(".pg-grid").html(html);
+        allProducts = response.products;
+        renderProducts(category, sortBy);
       } else {
+        $(".pg-loading").hide();
         $(".pg-grid").html("<p>No products found</p>");
       }
     }).fail(function () {
@@ -98,16 +185,36 @@ jQuery(document).ready(function ($) {
   }
 
   // Initial setup
+  const params = getUrlParams();
+  currentPage = params.page;
+  $("#pg-sort").val(params.sort);
   loadCategories();
-  loadProducts();
+  loadProducts(params.category, params.sort);
 
   // Category change
   $("#pg-category").on("change", function () {
-    loadProducts($(this).val(), $("#pg-sort").val());
+    currentPage = 1; // Reset to first page on category change
+    const category = $(this).val();
+    const sort = $("#pg-sort").val();
+    updateUrlParams(category, sort, currentPage);
+    loadProducts(category, sort);
   });
 
   // Sort change
   $("#pg-sort").on("change", function () {
-    loadProducts($("#pg-category").val(), $(this).val());
+    currentPage = 1; // Reset to first page on sort change
+    const category = $("#pg-category").val();
+    const sort = $(this).val();
+    updateUrlParams(category, sort, currentPage);
+    renderProducts(category, sort);
+  });
+
+  // Handle browser back/forward navigation
+  $(window).on("popstate", function () {
+    const params = getUrlParams();
+    currentPage = params.page;
+    $("#pg-category").val(params.category);
+    $("#pg-sort").val(params.sort);
+    renderProducts(params.category, params.sort);
   });
 });
