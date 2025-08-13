@@ -2,7 +2,13 @@
   padding: 20px;
 }
 .pg-filter {
+  display: flex;
+  gap: 10px;
   margin-bottom: 15px;
+}
+.pg-filter select {
+  padding: 5px;
+  border: 1px solid #ccc;
 }
 .pg-grid {
   display: grid;

@@ -27,6 +27,10 @@ body {
   background-color: var(--bg-color);
 }
 
+body.home h1.entry-title {
+  display: none;
+}
+
 header {
   background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
   color: #fff;

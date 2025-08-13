@@ -69,7 +69,7 @@ add_action('elementor/widgets/register', function($widgets_manager) {
  */
 add_action('elementor/elements/categories_registered', function($elements_manager) {
     $elements_manager->add_category('theme-widgets', [
-        'title' => __('All of Tung\' Widgets', 'tungtheme'),
+        'title' => __('Tung\' Widgets', 'tungtheme'),
         'icon' => 'fa fa-plug'
     ]);
 });
@@ -80,7 +80,7 @@ add_action('elementor/elements/categories_registered', function($elements_manage
 function tungtheme_register_elementor_widgets() {
     if (did_action('elementor/loaded')) {
         require_once get_template_directory() . '/elementor-widgets/class-product-gallery-widget.php';
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \TungTheme_Product_Gallery_Widget());
+        \Elementor\Plugin::instance()->widgets_manager->register(new \TungTheme_Product_Gallery_Widget());
     }
 }
 add_action('elementor/widgets/register', 'tungtheme_register_elementor_widgets');
@@ -103,8 +103,15 @@ add_action('wp_enqueue_scripts', 'tungtheme_enqueue_assets');
  */
 add_action('elementor/query/product_query', function($query) {
     if ($product_id = get_query_var('product_id')) {
-        $query->set('post_type', 'product');
-        $query->set('p', $product_id);
+        $query->set('post_type', 'page'); // Set to page to match single-product.php
+        $query->set('pagename', 'single-product');
+        $query->set('meta_query', [
+            [
+                'key' => '_tungtheme_product_id',
+                'value' => $product_id,
+                'compare' => '='
+            ]
+        ]);
     }
 });
 
@@ -112,7 +119,11 @@ add_action('elementor/query/product_query', function($query) {
  * Register custom rewrite rule for product pages
  */
 add_action('init', function() {
-    add_rewrite_rule('^product/([0-9]+)/?', 'index.php?pagename=single-product&product_id=$matches[1]', 'top');
+    add_rewrite_rule(
+        '^product/([0-9]+)/?$',
+        'index.php?post_type=page&pagename=single-product&product_id=$matches[1]',
+        'top'
+    );
 });
 
 /**
@@ -121,4 +132,42 @@ add_action('init', function() {
 add_filter('query_vars', function($vars) {
     $vars[] = 'product_id';
     return $vars;
+});
+
+/**
+ * Set product_id as meta for single-product page
+ */
+add_action('template_redirect', function() {
+    if (is_page('single-product') && $product_id = get_query_var('product_id')) {
+        global $wp_query;
+        $wp_query->set('is_single', true); // Ensure Elementor recognizes this as a single page
+        update_post_meta(get_the_ID(), '_tungtheme_product_id', $product_id);
+    }
+});
+
+
+// Redirect /product/:id to WooCommerce single-product.php template
+add_action('init', function () {
+    add_rewrite_rule(
+        '^product/([0-9]+)/?$',
+        'index.php?custom_product_id=$matches[1]',
+        'top'
+    );
+});
+
+add_filter('query_vars', function ($query_vars) {
+    $query_vars[] = 'custom_product_id';
+    return $query_vars;
+});
+
+add_action('template_include', function ($template) {
+    $custom_id = get_query_var('custom_product_id');
+    if ($custom_id) {
+        // Force WooCommerce single product template from theme
+        $woocommerce_template = get_stylesheet_directory() . '/woocommerce/single-product.php';
+        if (file_exists($woocommerce_template)) {
+            return $woocommerce_template;
+        }
+    }
+    return $template;
 });

@@ -76,16 +76,18 @@ class TungTheme_Product_Gallery_Widget extends Widget_Base {
     protected function render() {
         ?>
         <div class="tungtheme-product-gallery" data-items="<?php echo esc_attr($this->get_settings('items_per_row')); ?>">
-            <div class="pg-filter">
-                <select id="pg-category">
-                    <option value="">All Categories</option>
-                    <option value="smartphones">Smartphones</option>
-                    <option value="laptops">Laptops</option>
-                    <option value="fragrances">Fragrances</option>
+           <div class="pg-filter">
+                <select id="pg-category"></select>
+                <select id="pg-sort">
+                    <option value="">Sort By</option>
+                    <option value="title_asc">Title A–Z</option>
+                    <option value="title_desc">Title Z–A</option>
+                    <option value="price_asc">Price Low → High</option>
+                    <option value="price_desc">Price High → Low</option>
                 </select>
             </div>
-            <div class="pg-grid"></div>
             <div class="pg-loading">Loading...</div>
+            <div class="pg-grid"></div>
         </div>
         <?php
     }

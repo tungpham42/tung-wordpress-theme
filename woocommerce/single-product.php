@@ -3,6 +3,8 @@
  * Template Name: Single Product (DummyJSON)
  */
 get_header();
+
+$product_id = get_query_var('custom_product_id');
 ?>
 
 <div id="single-product" class="container" style="padding:20px;">
@@ -16,10 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const productContainer = document.querySelector(".product-details");
     const relatedContainer = document.querySelector(".related-products");
     const loader = document.querySelector(".pg-loading");
-
-    // Get product ID from URL
-    const pathParts = window.location.pathname.split('/');
-    const productId = pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2];
+    const productId = <?php echo json_encode($product_id); ?>;
 
     if (!productId) {
         productContainer.innerHTML = "<p>Invalid product ID.</p>";

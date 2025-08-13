@@ -1,5 +1,4 @@
 jQuery(document).ready(function ($) {
-  // Load categories into the dropdown
   function loadCategories() {
     $.get("https://dummyjson.com/products/categories", function (categories) {
       if (Array.isArray(categories) && categories.length > 0) {
@@ -16,8 +15,7 @@ jQuery(document).ready(function ($) {
     });
   }
 
-  // Load products from DummyJSON
-  function loadProducts(category = "") {
+  function loadProducts(category = "", sortBy = "") {
     $(".pg-loading").show();
     $(".pg-grid").empty();
 
@@ -29,16 +27,30 @@ jQuery(document).ready(function ($) {
     $.get(apiUrl, function (response) {
       $(".pg-loading").hide();
       if (response && response.products && response.products.length > 0) {
-        let html = "";
-        response.products.forEach((p) => {
-          html += `<div class="pg-item">
-                      <img src="${p.thumbnail}" alt="${p.title}">
-                      <h3>${p.title}</h3>
-                      <p class="price">$${p.price}</p>
-                      <span class="category">${p.category}</span>
-                      <a href="${window.location.origin}/product/${p.id}" class="btn-view">View Details</a>
-                  </div>`;
-        });
+        let products = response.products;
+
+        if (sortBy === "title_asc")
+          products.sort((a, b) => a.title.localeCompare(b.title));
+        else if (sortBy === "title_desc")
+          products.sort((a, b) => b.title.localeCompare(a.title));
+        else if (sortBy === "price_asc")
+          products.sort((a, b) => a.price - b.price);
+        else if (sortBy === "price_desc")
+          products.sort((a, b) => b.price - a.price);
+
+        let html = products
+          .map(
+            (p) => `
+        <div class="pg-item">
+          <img src="${p.thumbnail}" alt="${p.title}">
+          <h3>${p.title}</h3>
+          <p class="price">$${p.price}</p>
+          <span class="category">${p.category}</span>
+          <a href="${window.location.origin}/product/${p.id}" class="btn-view">View Details</a>
+        </div>
+      `
+          )
+          .join("");
         $(".pg-grid").html(html);
       } else {
         $(".pg-grid").html("<p>No products found</p>");
@@ -53,8 +65,13 @@ jQuery(document).ready(function ($) {
   loadCategories();
   loadProducts();
 
-  // Handle category change
+  // Category change
   $("#pg-category").on("change", function () {
-    loadProducts($(this).val());
+    loadProducts($(this).val(), $("#pg-sort").val());
+  });
+
+  // Sort change
+  $("#pg-sort").on("change", function () {
+    loadProducts($("#pg-category").val(), $(this).val());
   });
 });
