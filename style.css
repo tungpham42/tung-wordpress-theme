@@ -143,8 +143,16 @@ a.site-logo {
   transition: transform 0.3s ease;
 }
 
+.hamburger::before {
+  content: "☰";
+}
+
 .hamburger:hover {
   transform: rotate(90deg);
+}
+
+.hamburger:hover::before {
+  content: "✕";
 }
 
 .top-header-banner a.elementor-button,

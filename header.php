@@ -25,6 +25,6 @@
                 'fallback_cb' => false,
             ]); ?>
         </nav>
-        <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+        <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"></button>
     </div>
 </header>
