@@ -63,8 +63,18 @@ jQuery(document).ready(function ($) {
       currentPage === 1 ? "disabled" : ""
     } data-page="${currentPage - 1}">Prev</button>`;
 
-    // Page numbers
-    for (let i = 1; i <= totalPages; i++) {
+    // Calculate the range of page numbers to display (up to 3 pages)
+    const maxPagesToShow = 3;
+    let startPage = Math.max(1, currentPage - 1);
+    let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+    // Adjust startPage if near the end to ensure we show up to 3 pages
+    if (endPage - startPage + 1 < maxPagesToShow) {
+      startPage = Math.max(1, endPage - maxPagesToShow + 1);
+    }
+
+    // Page numbers (up to 3)
+    for (let i = startPage; i <= endPage; i++) {
       paginationHtml += `<button class="pg-page-btn${
         i === currentPage ? " active" : ""
       }" data-page="${i}">${i}</button>`;
@@ -92,11 +102,11 @@ jQuery(document).ready(function ($) {
     if (sortBy === "title_asc")
       return products.sort((a, b) => a.title.localeCompare(b.title));
     else if (sortBy === "title_desc")
-      return products.sort((a, b) => b.title.localeCompare(a.title));
+      return products.sort((a, b) => b.title.localeCompare(b.title));
     else if (sortBy === "price_asc")
       return products.sort((a, b) => a.price - b.price);
     else if (sortBy === "price_desc")
-      return products.sort((a, b) => b.price - a.price);
+      return products.sort((a, b) => b.price - b.price);
     else if (sortBy === "discount_price_asc")
       return products.sort((a, b) => {
         const aPrice = a.discountPercentage

@@ -200,18 +200,18 @@
 .pg-pagination {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 8px; /* Reduced gap for compactness */
   margin-top: 20px;
   flex-wrap: wrap;
 }
 
 .pg-page-btn {
-  padding: 8px 16px;
+  padding: 6px 12px; /* Reduced padding for compact buttons */
   border: none;
-  border-radius: 8px;
+  border-radius: 6px; /* Slightly smaller border-radius */
   background-color: #3498db; /* Matches button_bg_color */
   color: #fff; /* Matches button_color */
-  font-size: 14px;
+  font-size: 13px; /* Smaller font size for compactness */
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease,
     box-shadow 0.3s ease;
