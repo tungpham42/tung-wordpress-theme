@@ -486,6 +486,8 @@ class TungTheme_Product_Gallery_Widget extends Widget_Base {
                     <option value="title_desc">Title Z–A</option>
                     <option value="price_asc">Price Low → High</option>
                     <option value="price_desc">Price High → Low</option>
+                    <option value="discount_price_asc">Discount Price Low → High</option>
+                    <option value="discount_price_desc">Discount Price High → Low</option>
                 </select>
             </div>
             <div class="pg-loading">Loading Products...</div>

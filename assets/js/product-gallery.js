@@ -97,6 +97,26 @@ jQuery(document).ready(function ($) {
       return products.sort((a, b) => a.price - b.price);
     else if (sortBy === "price_desc")
       return products.sort((a, b) => b.price - a.price);
+    else if (sortBy === "discount_price_asc")
+      return products.sort((a, b) => {
+        const aPrice = a.discountPercentage
+          ? a.price * (1 - a.discountPercentage / 100)
+          : a.price;
+        const bPrice = b.discountPercentage
+          ? b.price * (1 - b.discountPercentage / 100)
+          : b.price;
+        return aPrice - bPrice;
+      });
+    else if (sortBy === "discount_price_desc")
+      return products.sort((a, b) => {
+        const aPrice = a.discountPercentage
+          ? a.price * (1 - a.discountPercentage / 100)
+          : a.price;
+        const bPrice = b.discountPercentage
+          ? b.price * (1 - b.discountPercentage / 100)
+          : b.price;
+        return bPrice - aPrice;
+      });
     return products;
   }
 
