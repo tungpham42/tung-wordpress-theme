@@ -58,6 +58,11 @@ jQuery(document).ready(function ($) {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     let paginationHtml = '<div class="pg-pagination">';
 
+    // First button
+    paginationHtml += `<button class="pg-page-btn" ${
+      currentPage === 1 ? "disabled" : ""
+    } data-page="1">First</button>`;
+
     // Previous button
     paginationHtml += `<button class="pg-page-btn" ${
       currentPage === 1 ? "disabled" : ""
@@ -85,6 +90,11 @@ jQuery(document).ready(function ($) {
       currentPage === totalPages ? "disabled" : ""
     } data-page="${currentPage + 1}">Next</button>`;
 
+    // Last button
+    paginationHtml += `<button class="pg-page-btn" ${
+      currentPage === totalPages ? "disabled" : ""
+    } data-page="${totalPages}">Last</button>`;
+
     paginationHtml += "</div>";
     $(".pg-grid").after(paginationHtml);
 
@@ -106,7 +116,7 @@ jQuery(document).ready(function ($) {
     else if (sortBy === "price_asc")
       return products.sort((a, b) => a.price - b.price);
     else if (sortBy === "price_desc")
-      return products.sort((a, b) => b.price - b.price);
+      return products.sort((a, b) => b.price - a.price);
     else if (sortBy === "discount_price_asc")
       return products.sort((a, b) => {
         const aPrice = a.discountPercentage

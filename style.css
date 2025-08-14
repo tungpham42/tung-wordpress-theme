@@ -156,6 +156,7 @@ footer {
   background: linear-gradient(180deg, #111827, #1f2937);
   color: #e5e7eb;
   padding: 3rem 2rem;
+  position: relative;
 }
 
 .footer-container {
@@ -734,6 +735,44 @@ img:hover {
   transform: scale(1.05);
 }
 
+/* Back to Top Button Styles */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--card-shadow);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  background-color: var(--highlight-color);
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.back-to-top svg {
+  width: 24px;
+  height: 24px;
+}
+
 /* Tablets (≥768px) */
 @media (min-width: 768px) {
   .primary-nav ul {
@@ -816,6 +855,13 @@ img:hover {
     width: 100%;
     padding: 0.75rem;
   }
+
+  .back-to-top {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 40px;
+    height: 40px;
+  }
 }
 
 /* Small Mobile (≤480px) */
@@ -848,8 +894,24 @@ img:hover {
   .search-form button[type="submit"] {
     font-size: 0.9rem;
   }
+
+  .back-to-top {
+    bottom: 1rem;
+    right: 1rem;
+    width: 36px;
+    height: 36px;
+  }
+
+  .back-to-top svg {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 ol.wp-block-latest-comments {
   padding-left: 0 !important;
+}
+
+.e-con.e-flex > .e-con-inner {
+  flex-wrap: nowrap !important;
 }
