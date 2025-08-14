@@ -83,7 +83,7 @@ add_action('elementor/elements/categories_registered', function($elements_manage
  */
 function tungtheme_register_elementor_widgets() {
     if (did_action('elementor/loaded')) {
-        require_once get_template_directory() . '/elementor-widgets/class-product-gallery-widget.php';
+        require_once get_template_directory() . '/elementor-addon/class-product-gallery-widget.php';
         \Elementor\Plugin::instance()->widgets_manager->register(new \TungTheme_Product_Gallery_Widget());
     }
 }
