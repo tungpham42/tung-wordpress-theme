@@ -252,12 +252,11 @@ img {
   max-width: 100%;
   height: auto;
   border-radius: 12px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 img:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .product-summary {
